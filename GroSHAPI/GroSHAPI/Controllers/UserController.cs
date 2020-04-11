@@ -53,46 +53,60 @@ namespace GroSHAPI.Controllers
 		[HttpPost]		
 		public HttpResponseMessage SendEmail([FromUri] string email)
 		{
-			Response<int> response = new Response<int>();
+			Response<string> response = new Response<string>();
 			if (!string.IsNullOrEmpty(email))
 			{
 				var result = this._userBusinessLayer.SendEmail(email);
 				if (result == 1)
 				{
-					response.SatusCode = 200;
-					response.Data = result;
-					response.Message = Utility.Constants.EmailExists;
+					string otp = Utility.Common.RandomString(4,true);
+					EmailModel emailModel = new EmailModel();
+					emailModel.ToEmail = email;
+					emailModel.Body = otp;
+					bool output = true; //Utility.Common.SendEmail(emailModel);
+					if (output)
+					{
+						response.SatusCode = 200;
+						response.Data = otp;
+						response.Message = Utility.Constants.EmailExists;
+					}
+					else
+					{
+						response.SatusCode = 500;
+						response.Data = string.Empty;
+						response.Message = Utility.Constants.FailedMesg;
+					}
 				}
 				else if (result == 2)
 				{
 					response.SatusCode = 201;
-					response.Data = result;
+					response.Data = string.Empty;
 					response.Message = Utility.Constants.EmailNotExist;
 				}
 				else
 				{
 					response.SatusCode = 500;
-					response.Data = result;
+					response.Data = string.Empty;
 					response.Message = Utility.Constants.FailedMesg;
 				}
 			}
 			else
 			{
 				response.SatusCode = 500;
-				response.Data = 1;
+				response.Data = string.Empty;
 				response.Message = Utility.Constants.EmailBlank;
 			}
 			return Request.CreateResponse(response);// Ok(response);
 		}
+				
 
-		//[AllowAnonymous]
-		[HttpPost]		
-		public HttpResponseMessage ResetPassword([FromUri] string email,string newPassword)
+		[HttpPost]
+		public HttpResponseMessage ResetPassword([FromUri] string email, string newPassword)
 		{
 			Response<int> response = new Response<int>();
-			if (!string.IsNullOrEmpty(email)&& !string.IsNullOrEmpty(newPassword))
+			if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(newPassword))
 			{
-				var result = this._userBusinessLayer.ResetPassword(email,newPassword);
+				var result = this._userBusinessLayer.ResetPassword(email, newPassword);
 				if (result == 1)
 				{
 					response.SatusCode = 200;
@@ -116,7 +130,49 @@ namespace GroSHAPI.Controllers
 			{
 				response.SatusCode = 500;
 				response.Data = 1;
-				response.Message ="Email and password can not  left blank";
+				response.Message = "Email and password can not be left blank";
+			}
+			return Request.CreateResponse(response);// Ok(response);
+		}
+
+		//[AllowAnonymous]
+		[HttpGet]
+		public HttpResponseMessage GetCountries()
+		{
+			Response<List<Country>> response = new Response<List<Country>>();
+			var result = this._userBusinessLayer.GetCountry();
+			if (result.Count > 0)
+			{
+				response.SatusCode = 200;
+				response.Data = result;
+				response.Message = "Success";
+			}
+			else
+			{
+				response.SatusCode = 500;
+				response.Data = result;
+				response.Message = Utility.Constants.FailedMesg;
+			}
+			return Request.CreateResponse(response);// Ok(response);
+		}
+
+		//[AllowAnonymous]
+		[HttpGet]
+		public HttpResponseMessage GetStates(int countryId)
+		{
+			Response<List<State>> response = new Response<List<State>>();
+			var result = this._userBusinessLayer.GetStates(countryId);
+			if (result.Count > 0)
+			{
+				response.SatusCode = 200;
+				response.Data = result;
+				response.Message = "Success";
+			}
+			else
+			{
+				response.SatusCode = 500;
+				response.Data = result;
+				response.Message = Utility.Constants.FailedMesg;
 			}
 			return Request.CreateResponse(response);// Ok(response);
 		}

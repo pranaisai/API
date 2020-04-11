@@ -132,6 +132,68 @@ namespace DataAccessLayer
 			return flag;
 		}
 
+		/// <summary>
+		/// Get Country list interface implementation
+		/// </summary>
+		/// <returns></returns>
+		public List<DTO.Models.Country> GetCountry()
+		{
+			List<DTO.Models.Country> country = new List<DTO.Models.Country>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var result = (from x in db.Countries select x).ToList();
+					foreach (var item in result)
+					{
+						DTO.Models.Country countrylst = new DTO.Models.Country();
+						countrylst.CountryId = item.CountryId;
+						countrylst.CountryName = item.CountryName;
+						country.Add(countrylst);
+					}
+				};
+			}
+			catch (Exception ex)
+			{
+				DTO.Models.Country stateslst = new DTO.Models.Country();				
+				stateslst.CountryId = 1001;
+				stateslst.CountryName = ex.StackTrace;
+				country.Add(stateslst);
+				Console.WriteLine(ex.StackTrace);
+			}
+			return country;
+		}
+
+		/// <summary>
+		/// Get States interface implementation
+		/// </summary>
+		/// <param name="countryId"></param>
+		/// <returns></returns>
+		public List<DTO.Models.State> GetStates(int countryId)
+		{
+			List<DTO.Models.State> states = new List<DTO.Models.State>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var result = (from x in db.States where x.CountryId==countryId select x).ToList();
+					foreach (var item in result)
+					{
+						DTO.Models.State stateslst = new DTO.Models.State();
+						stateslst.StateId = item.StateId;
+						stateslst.CountryId = item.CountryId;
+						stateslst.Statename = item.StatenName;
+						states.Add(stateslst);
+					}
+				};
+			}
+			catch (Exception ex)
+			{				
+				Console.WriteLine(ex.StackTrace);
+			}
+			return states;
+		}
+
 		//	using (GroSHDBEntities db = new GroSHDBEntities())
 		//	{
 		//		db.UsersInfoes.Add(new UsersInfo()

@@ -62,5 +62,22 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="AddNewUser" FunctionName="GroSHDBModel.Store.AddNewUser" />
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="GroSHDBModel.Country">
+        <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="GroSHDBModel.State">
+        <MappingFragment StoreEntitySet="States">
+          <ScalarProperty Name="StatenName" ColumnName="StatenName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -31,6 +31,8 @@ namespace DataAccessLayer
         public virtual DbSet<SendReceiveRequest> SendReceiveRequests { get; set; }
         public virtual DbSet<UsersAddress> UsersAddresses { get; set; }
         public virtual DbSet<UsersInfo> UsersInfoes { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<State> States { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AddNewUser(string firstName, string lastName, string email, string phone, string password, string addressLine, string city, string state, string country, string zipcode, string lat, string lon, ObjectParameter result)
         {

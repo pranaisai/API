@@ -13,5 +13,7 @@ namespace DataAccessLayer
 		int UserRegistration(UserDetails userDetail);
 		int SendEmail(string email);
 		int ResetPassword(string email, string newPassword);
+		List<DTO.Models.Country> GetCountry();
+		List<DTO.Models.State> GetStates(int countryId);
 	}
 }

@@ -32,5 +32,15 @@ namespace BusinessLayer
 		{
 			return this._userDataAccessLayer.ResetPassword(email,newPassword);
 		}
+
+		public List<DTO.Models.Country> GetCountry()
+		{
+			return this._userDataAccessLayer.GetCountry();
+		}
+
+		public List<DTO.Models.State> GetStates(int countryId)
+		{
+			return this._userDataAccessLayer.GetStates(countryId);
+		}
 	}
 }

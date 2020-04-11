@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\GrocSHItem.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

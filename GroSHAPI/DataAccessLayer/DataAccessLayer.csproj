@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Country.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GrocsharyItem.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
@@ -75,6 +78,9 @@
     <Compile Include="IUserDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendReceiveRequest.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserDataAccess.cs" />

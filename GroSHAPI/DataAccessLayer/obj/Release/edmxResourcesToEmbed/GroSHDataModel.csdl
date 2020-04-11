@@ -32,6 +32,12 @@
       <Parameter Name="lon" Mode="In" Type="String" />
       <Parameter Name="result" Mode="InOut" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="Countries" EntityType="GroSHDBModel.Country" />
+    <EntitySet Name="States" EntityType="GroSHDBModel.State" />
+    <AssociationSet Name="FK_States_Countries" Association="GroSHDBModel.FK_States_Countries">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="GrocsharyItem">
     <Key>
@@ -128,6 +134,35 @@
       </Principal>
       <Dependent Role="UsersAddress">
         <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="States" Relationship="GroSHDBModel.FK_States_Countries" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StatenName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Country" Relationship="GroSHDBModel.FK_States_Countries" FromRole="State" ToRole="Country" />
+  </EntityType>
+  <Association Name="FK_States_Countries">
+    <End Type="GroSHDBModel.Country" Role="Country" Multiplicity="0..1" />
+    <End Type="GroSHDBModel.State" Role="State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

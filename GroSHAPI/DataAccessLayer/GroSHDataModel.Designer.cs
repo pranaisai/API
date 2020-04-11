@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\rakesh\GitHub\GroSHWebAPI\GroSHAPI\DataAccessLayer\GroSHDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\DataAccessLayer\GroSHDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GroSHDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="GrocsharyItem">
           <Key>
             <PropertyRef Name="itemId" />
@@ -31,6 +38,14 @@
           <Property Name="sentDate" Type="datetime" />
           <Property Name="receivedDate" Type="datetime" />
           <Property Name="acceptedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="StatenName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UsersAddress">
           <Key>
@@ -73,7 +88,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SendRecei__sentF__5EBF139D">
+        <Association Name="FK__SendRecei__sentF__3B75D760">
           <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
           <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -85,15 +100,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SendRecei__sentF__656C112C">
-          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
-          <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
+        <Association Name="FK_States_Countries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+          <End Role="States" Type="Self.States" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UsersInfo">
-              <PropertyRef Name="id" />
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
             </Principal>
-            <Dependent Role="SendReceiveRequest">
-              <PropertyRef Name="sentFrom" />
+            <Dependent Role="States">
+              <PropertyRef Name="CountryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -125,21 +140,23 @@
           <Parameter Name="result" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="GroSHDBModelStoreContainer">
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SendReceiveRequest" EntityType="Self.SendReceiveRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersAddress" EntityType="Self.UsersAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersInfo" EntityType="Self.UsersInfo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Grocshary__user___36B12243" Association="Self.FK__Grocshary__user___36B12243">
             <End Role="UsersInfo" EntitySet="UsersInfo" />
             <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__5EBF139D" Association="Self.FK__SendRecei__sentF__5EBF139D">
+          <AssociationSet Name="FK__SendRecei__sentF__3B75D760" Association="Self.FK__SendRecei__sentF__3B75D760">
             <End Role="UsersInfo" EntitySet="UsersInfo" />
             <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__656C112C" Association="Self.FK__SendRecei__sentF__656C112C">
-            <End Role="UsersInfo" EntitySet="UsersInfo" />
-            <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
+          <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="States" EntitySet="States" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersAddress_UsersInfo" Association="Self.FK_UsersAddress_UsersInfo">
             <End Role="UsersInfo" EntitySet="UsersInfo" />
@@ -182,6 +199,12 @@
             <Parameter Name="lon" Mode="In" Type="String" />
             <Parameter Name="result" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Countries" EntityType="GroSHDBModel.Country" />
+          <EntitySet Name="States" EntityType="GroSHDBModel.State" />
+          <AssociationSet Name="FK_States_Countries" Association="GroSHDBModel.FK_States_Countries">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="GrocsharyItem">
           <Key>
@@ -281,6 +304,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="States" Relationship="GroSHDBModel.FK_States_Countries" FromRole="Country" ToRole="State" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="StatenName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="GroSHDBModel.FK_States_Countries" FromRole="State" ToRole="Country" />
+        </EntityType>
+        <Association Name="FK_States_Countries">
+          <End Type="GroSHDBModel.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="GroSHDBModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -348,6 +400,23 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddNewUser" FunctionName="GroSHDBModel.Store.AddNewUser" />
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="GroSHDBModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="GroSHDBModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="StatenName" ColumnName="StatenName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

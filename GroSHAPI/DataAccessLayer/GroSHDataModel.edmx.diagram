@@ -12,6 +12,9 @@
         <AssociationConnector Association="GroSHDBModel.FK__Grocshary__user___36B12243" />
         <AssociationConnector Association="GroSHDBModel.FK__SendRecei__sentF__3B75D760" />
         <AssociationConnector Association="GroSHDBModel.FK_UsersAddress_UsersInfo" />
+        <EntityTypeShape EntityType="GroSHDBModel.Country" Width="1.5" PointX="5.375" PointY="1" />
+        <EntityTypeShape EntityType="GroSHDBModel.State" Width="1.5" PointX="7.625" PointY="0.875" />
+        <AssociationConnector Association="GroSHDBModel.FK_States_Countries" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

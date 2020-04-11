@@ -12,5 +12,7 @@ namespace BusinessLayer
 		int UserRegistration(UserDetails userDetail);
 		int SendEmail(string email);
 		int ResetPassword(string email, string newPassword);
+		List<Country> GetCountry();
+		List<State> GetStates(int countryId);
 	}
 }
