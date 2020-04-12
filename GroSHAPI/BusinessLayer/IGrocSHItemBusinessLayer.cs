@@ -10,5 +10,6 @@ namespace BusinessLayer
  	public interface IGrocSHItemBusinessLayer
 	{
 		int AddGroSHItem(GrocSHItem grocShItem);
+		int UpdateImageName(int itemId, string imageName);
 	}
 }

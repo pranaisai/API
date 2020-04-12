@@ -20,5 +20,10 @@ namespace BusinessLayer
 		{
 			return this._grocSHItemDataAccess.AddGroSHItem(grocShItem);
 		}
+
+		public int UpdateImageName(int itemId, string imageName)
+		{
+			return this._grocSHItemDataAccess.UpdateImageName(itemId,imageName);
+		}
 	}
 }

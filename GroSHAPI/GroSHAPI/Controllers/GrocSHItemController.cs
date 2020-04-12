@@ -26,13 +26,12 @@ namespace GroSHAPI.Controllers
 			if (grocSHItem != null)
 			{
 				var result = this._grocSHItemBusinessLayer.AddGroSHItem(grocSHItem);
-				if (result == 1)
+				if (result >0)
 				{
 					response.SatusCode = 200;
 					response.Data = result;
 					response.Message = grocSHItem.ItemId==0?Utility.Constants.SuccessMesg: Utility.Constants.UpdateMesg;
-				}
-				
+				}				
 				else
 				{
 					response.SatusCode = 201;

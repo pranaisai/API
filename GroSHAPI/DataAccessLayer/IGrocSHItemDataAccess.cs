@@ -10,5 +10,6 @@ namespace DataAccessLayer
 	public interface IGrocSHItemDataAccess
 	{
 		int AddGroSHItem(GrocSHItem grocShItem);
+		int UpdateImageName(int itemId,string imageName);
 	}
 }
