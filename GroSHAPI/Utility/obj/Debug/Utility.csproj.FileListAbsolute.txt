@@ -3,3 +3,10 @@ C:\Users\rakesh\GitHub\GroSHWebAPI\GroSHAPI\Utility\bin\Debug\Utility.pdb
 C:\Users\rakesh\GitHub\GroSHWebAPI\GroSHAPI\Utility\obj\Debug\Utility.dll
 C:\Users\rakesh\GitHub\GroSHWebAPI\GroSHAPI\Utility\obj\Debug\Utility.pdb
 C:\Users\rakesh\GitHub\GroSHWebAPI\GroSHAPI\Utility\obj\Debug\Utility.csprojResolveAssemblyReference.cache
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Debug\Utility.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Debug\Utility.pdb
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Debug\DTO.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Debug\DTO.pdb
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Debug\Utility.csprojResolveAssemblyReference.cache
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Debug\Utility.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Debug\Utility.pdb

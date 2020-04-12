@@ -157,7 +157,7 @@ namespace DataAccessLayer
 			{
 				DTO.Models.Country stateslst = new DTO.Models.Country();				
 				stateslst.CountryId = 1001;
-				stateslst.CountryName = ex.StackTrace;
+				stateslst.CountryName = ex.Message;
 				country.Add(stateslst);
 				Console.WriteLine(ex.StackTrace);
 			}

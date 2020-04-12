@@ -96,3 +96,5 @@ C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\EntityFramework.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\obj\Release\GroSHAPI.csprojResolveAssemblyReference.cache
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\obj\Release\GroSHAPI.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\obj\Release\GroSHAPI.pdb
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\EntityFramework.SqlServer.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\EntityFramework.SqlServer.xml
