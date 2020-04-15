@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO.Models;
+using System.Web;
 
 namespace DataAccessLayer
 {
@@ -51,11 +52,86 @@ namespace DataAccessLayer
 					}
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				Console.WriteLine(ex.StackTrace);
 			}
 			return flag;
+		}
+
+		public List<Item> GetItems(string lat, string lon, int pageNumber, int rowsPerPage, int userId)
+		{
+			List<Item> items = new List<Item>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var ctx = HttpContext.Current;
+					var root = ctx.Server.MapPath("~/ItemImages");
+
+					var result = (from grocShItem in db.GetItems(lat, lon, pageNumber, rowsPerPage, userId)
+								  select grocShItem).ToList();
+
+					if (result != null)
+					{
+						foreach (var item in result)
+						{
+							Item data = new Item();
+							data.ItemId = item.itemId;
+							data.ItemName = item.ItemName;
+							data.ItemDescription = item.itemDescription;
+							data.ExchangeItem = item.exchangeItem;
+							data.ImageName = item.imageName;
+							data.ImageUrl = root;
+							items.Add(data);
+						}
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.StackTrace);
+			}
+			return items;
+			//a=(from x in db.procname()select new a(){a.name=x.nze}).tolist();
+		}
+
+		public List<Item> GetMyItems(int pageNumber, int rowsPerPage, int userId)
+		{
+			List<Item> items = new List<Item>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var ctx = HttpContext.Current;
+					var root = ctx.Server.MapPath("~/ItemImages");
+
+					var result = (from grocShItem in db.GetMyItems(pageNumber, rowsPerPage, userId)
+								  select grocShItem).ToList();
+
+					if (result != null)
+					{
+						foreach (var item in result)
+						{
+							Item data = new Item();
+							data.ItemId = item.itemId;
+							data.ItemName = item.ItemName;
+							data.ItemDescription = item.itemDescription;
+							data.ExchangeItem = item.exchangeItem;
+							data.ImageName = item.imageName;
+							data.ImageUrl = root;
+							items.Add(data);
+						}
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.StackTrace);
+			}
+			return items;
 		}
 
 		/// <summary>
@@ -64,7 +140,7 @@ namespace DataAccessLayer
 		/// <param name="itemId"></param>
 		/// <param name="imageName"></param>
 		/// <returns></returns>
-		public int UpdateImageName(int itemId,string imageName)
+		public int UpdateImageName(int itemId, string imageName)
 		{
 			int flag = 0;
 			try
@@ -75,7 +151,7 @@ namespace DataAccessLayer
 					{
 						GrocsharyItem c = (from x in db.GrocsharyItems
 										   where x.itemId == itemId
-										   select x).First();						
+										   select x).First();
 						c.imageName = imageName;
 						flag = db.SaveChanges();
 					}

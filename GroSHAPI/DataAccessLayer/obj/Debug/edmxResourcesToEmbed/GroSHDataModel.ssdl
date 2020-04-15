@@ -134,6 +134,24 @@
     <Parameter Name="lon" Type="nvarchar" Mode="In" />
     <Parameter Name="result" Type="int" Mode="InOut" />
   </Function>
+  <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+    <Parameter Name="lat1" Type="float" Mode="In" />
+    <Parameter Name="long1" Type="float" Mode="In" />
+    <Parameter Name="lat2" Type="float" Mode="In" />
+    <Parameter Name="long2" Type="float" Mode="In" />
+  </Function>
+  <Function Name="GetItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lat" Type="nvarchar" Mode="In" />
+    <Parameter Name="lon" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetMyItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="GroSHDBModelStoreContainer">
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />

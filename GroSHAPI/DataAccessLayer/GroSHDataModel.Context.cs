@@ -86,5 +86,47 @@ namespace DataAccessLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("AddNewUser", firstNameParameter, lastNameParameter, emailParameter, phoneParameter, passwordParameter, addressLineParameter, cityParameter, stateParameter, countryParameter, zipcodeParameter, latParameter, lonParameter, result);
         }
+    
+        public virtual ObjectResult<GetItems_Result> GetItems(string lat, string lon, Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
+        {
+            var latParameter = lat != null ?
+                new ObjectParameter("lat", lat) :
+                new ObjectParameter("lat", typeof(string));
+    
+            var lonParameter = lon != null ?
+                new ObjectParameter("lon", lon) :
+                new ObjectParameter("lon", typeof(string));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var rowsPerPageParameter = rowsPerPage.HasValue ?
+                new ObjectParameter("RowsPerPage", rowsPerPage) :
+                new ObjectParameter("RowsPerPage", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItems_Result>("GetItems", latParameter, lonParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter);
+        }
+    
+        public virtual ObjectResult<GetMyItems_Result> GetMyItems(Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
+        {
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var rowsPerPageParameter = rowsPerPage.HasValue ?
+                new ObjectParameter("RowsPerPage", rowsPerPage) :
+                new ObjectParameter("RowsPerPage", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
+        }
     }
 }

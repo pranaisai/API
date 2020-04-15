@@ -139,6 +139,24 @@
           <Parameter Name="lon" Type="nvarchar" Mode="In" />
           <Parameter Name="result" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="long1" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+          <Parameter Name="long2" Type="float" Mode="In" />
+        </Function>
+        <Function Name="GetItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lat" Type="nvarchar" Mode="In" />
+          <Parameter Name="lon" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+          <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMyItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+          <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="GroSHDBModelStoreContainer">
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
@@ -205,6 +223,18 @@
             <End Role="Country" EntitySet="Countries" />
             <End Role="State" EntitySet="States" />
           </AssociationSet>
+          <FunctionImport Name="GetItems" ReturnType="Collection(GroSHDBModel.GetItems_Result)">
+            <Parameter Name="lat" Mode="In" Type="String" />
+            <Parameter Name="lon" Mode="In" Type="String" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMyItems" ReturnType="Collection(GroSHDBModel.GetMyItems_Result)">
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="GrocsharyItem">
           <Key>
@@ -333,6 +363,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetItems_Result">
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="distance" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetMyItems_Result">
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -417,6 +462,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetItems" FunctionName="GroSHDBModel.Store.GetItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.GetItems_Result">
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMyItems" FunctionName="GroSHDBModel.Store.GetMyItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result">
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

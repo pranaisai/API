@@ -41,5 +41,45 @@ namespace GroSHAPI.Controllers
 			}
 			return Request.CreateResponse(response);// Ok(response);
 		}
+
+		[HttpGet]
+		public HttpResponseMessage GetItem(string lat, string lon, int pageNumber, int numberOfRow, int userId)
+		{
+			Response<List<Item>> response = new Response<List<Item>>();
+			try
+			{				
+				List<Item> items = this._grocSHItemBusinessLayer.GetItems(lat, lon, pageNumber, numberOfRow, userId);
+				response.SatusCode = 200;
+				response.Data = items;
+				response.Message = "sucess";
+			}
+			catch(Exception)
+			{
+				response.SatusCode = 201;
+				response.Data = null;
+				response.Message = Utility.Constants.FailedMesg;
+			}
+			return Request.CreateResponse(response);// Ok(response);
+		}
+
+		[HttpGet]
+		public HttpResponseMessage GetMyItem(int pageNumber, int numberOfRow, int userId)
+		{
+			Response<List<Item>> response = new Response<List<Item>>();
+			try
+			{
+				List<Item> items = this._grocSHItemBusinessLayer.GetMyItems(pageNumber, numberOfRow, userId);
+				response.SatusCode = 200;
+				response.Data = items;
+				response.Message = "sucess";
+			}
+			catch (Exception)
+			{
+				response.SatusCode = 201;
+				response.Data = null;
+				response.Message = Utility.Constants.FailedMesg;
+			}
+			return Request.CreateResponse(response);// Ok(response);
+		}
 	}
 }
