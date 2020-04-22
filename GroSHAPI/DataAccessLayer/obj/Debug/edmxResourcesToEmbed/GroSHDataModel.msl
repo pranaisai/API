@@ -4,6 +4,7 @@
     <EntitySetMapping Name="GrocsharyItems">
       <EntityTypeMapping TypeName="GroSHDBModel.GrocsharyItem">
         <MappingFragment StoreEntitySet="GrocsharyItem">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="ItemName" ColumnName="ItemName" />
           <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
           <ScalarProperty Name="createdDate" ColumnName="createdDate" />
@@ -93,12 +94,13 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetMyItems" FunctionName="GroSHDBModel.Store.GetMyItems">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result">
+        <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result1">
           <ScalarProperty Name="itemId" ColumnName="itemId" />
           <ScalarProperty Name="ItemName" ColumnName="ItemName" />
           <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
           <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
           <ScalarProperty Name="imageName" ColumnName="imageName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

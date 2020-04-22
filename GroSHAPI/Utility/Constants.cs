@@ -17,6 +17,13 @@ namespace Utility
 		public const string Email = "email";
 		public const string Phone = "phone";
 		public const string UserId = "userId";
+		public const string AddressLine = "addressLine";
+		public const string Country = "country";
+		public const string State = "state";
+		public const string City = "city";
+		public const string Zipcode = "zipcode";
+		public const string Lat = "lat";
+		public const string Lon = "lon";
 		public const string SuccessMesg = "Record Inserted Successfully";
 		public const string UpdateMesg = "Record Updated Successfully";
 		public const string UserAlreadyExist = "User already exist";

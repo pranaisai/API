@@ -14,5 +14,8 @@ namespace DTO.Models
 		public string ExchangeItem { get; set; }
 		public string ImageName { get; set; }
 		public string ImageUrl { get; set; }
+		public double? Distance { get; set; }
+		public string UnitOfLength { get; set; } = "Mile";
+		public bool? IsActive { get; set; }
 	}
 }

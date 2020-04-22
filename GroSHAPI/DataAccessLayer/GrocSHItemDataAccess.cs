@@ -34,7 +34,8 @@ namespace DataAccessLayer
 							lon = grocShItem.Lon,
 							imageName = grocShItem.ImageName,
 							createdDate = DateTime.Now,
-							modifiedDate = DateTime.Now
+							modifiedDate = DateTime.Now,
+							IsActive = true
 						});
 						flag = db.SaveChanges();
 						flag = (from record in db.GrocsharyItems orderby record.itemId select record.itemId).Last();
@@ -48,6 +49,7 @@ namespace DataAccessLayer
 						c.itemDescription = grocShItem.ItemDescription;
 						c.exchangeItem = grocShItem.ExchangeItem;
 						c.imageName = grocShItem.ImageName;
+						c.IsActive = grocShItem.IsActive;
 						flag = db.SaveChanges();
 					}
 				}
@@ -58,7 +60,15 @@ namespace DataAccessLayer
 			}
 			return flag;
 		}
-
+		/// <summary>
+		/// This method is used to Get Items List
+		/// </summary>
+		/// <param name="lat"></param>
+		/// <param name="lon"></param>
+		/// <param name="pageNumber"></param>
+		/// <param name="rowsPerPage"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		public List<Item> GetItems(string lat, string lon, int pageNumber, int rowsPerPage, int userId)
 		{
 			List<Item> items = new List<Item>();
@@ -66,8 +76,8 @@ namespace DataAccessLayer
 			{
 				using (GroSHDBEntities db = new GroSHDBEntities())
 				{
-					var ctx = HttpContext.Current;
-					var root = ctx.Server.MapPath("~/ItemImages");
+					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+					var root = ctx + "/ItemImages";
 
 					var result = (from grocShItem in db.GetItems(lat, lon, pageNumber, rowsPerPage, userId)
 								  select grocShItem).ToList();
@@ -82,7 +92,11 @@ namespace DataAccessLayer
 							data.ItemDescription = item.itemDescription;
 							data.ExchangeItem = item.exchangeItem;
 							data.ImageName = item.imageName;
-							data.ImageUrl = root;
+							data.Distance = item.distance;							
+							if (!string.IsNullOrEmpty(item.imageName))
+							{
+								data.ImageUrl = root + "/" + item.imageName;
+							}
 							items.Add(data);
 						}
 					}
@@ -97,6 +111,13 @@ namespace DataAccessLayer
 			//a=(from x in db.procname()select new a(){a.name=x.nze}).tolist();
 		}
 
+		/// <summary>
+		/// This method is used to get my itme list
+		/// </summary>
+		/// <param name="pageNumber"></param>
+		/// <param name="rowsPerPage"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		public List<Item> GetMyItems(int pageNumber, int rowsPerPage, int userId)
 		{
 			List<Item> items = new List<Item>();
@@ -104,9 +125,8 @@ namespace DataAccessLayer
 			{
 				using (GroSHDBEntities db = new GroSHDBEntities())
 				{
-					var ctx = HttpContext.Current;
-					var root = ctx.Server.MapPath("~/ItemImages");
-
+					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+					var root = ctx + "/ItemImages";
 					var result = (from grocShItem in db.GetMyItems(pageNumber, rowsPerPage, userId)
 								  select grocShItem).ToList();
 
@@ -120,7 +140,11 @@ namespace DataAccessLayer
 							data.ItemDescription = item.itemDescription;
 							data.ExchangeItem = item.exchangeItem;
 							data.ImageName = item.imageName;
-							data.ImageUrl = root;
+							data.IsActive = item.IsActive;						
+							if (!string.IsNullOrEmpty(item.imageName))
+							{
+								data.ImageUrl = root+"/"+item.imageName;
+							}
 							items.Add(data);
 						}
 					}

@@ -16,5 +16,6 @@ namespace DTO.Models
 		public string Lat { get; set; }
 		public string Lon { get; set; }
 		public string ImageName { get; set; }
+		public bool IsActive { get; set; }
 	}
 }

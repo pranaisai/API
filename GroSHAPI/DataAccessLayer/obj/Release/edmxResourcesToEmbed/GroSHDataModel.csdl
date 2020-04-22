@@ -38,6 +38,18 @@
       <End Role="Country" EntitySet="Countries" />
       <End Role="State" EntitySet="States" />
     </AssociationSet>
+    <FunctionImport Name="GetItems" ReturnType="Collection(GroSHDBModel.GetItems_Result)">
+      <Parameter Name="lat" Mode="In" Type="String" />
+      <Parameter Name="lon" Mode="In" Type="String" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+      <Parameter Name="userId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetMyItems" ReturnType="Collection(GroSHDBModel.GetMyItems_Result1)">
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+      <Parameter Name="userId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="GrocsharyItem">
     <Key>
@@ -54,6 +66,7 @@
     <Property Name="modifiedDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="UsersInfo" Relationship="GroSHDBModel.FK__Grocshary__user___36B12243" FromRole="GrocsharyItem" ToRole="UsersInfo" />
     <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
   </EntityType>
   <EntityType Name="SendReceiveRequest">
     <Key>
@@ -166,4 +179,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="GetItems_Result">
+    <Property Type="Int32" Name="itemId" Nullable="false" />
+    <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+    <Property Type="Double" Name="distance" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetMyItems_Result">
+    <Property Type="Int32" Name="itemId" Nullable="false" />
+    <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="GetMyItems_Result1">
+    <Property Type="Int32" Name="itemId" Nullable="false" />
+    <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+    <Property Type="Boolean" Name="IsActive" Nullable="true" />
+  </ComplexType>
 </Schema>

@@ -33,6 +33,17 @@ namespace DataAccessLayer
 					userInfo.Phone = user.phone;
 					userInfo.UserId = Convert.ToString(user.id);
 					userInfo.IsValid = true;
+					var userAddress = db.UsersAddresses.FirstOrDefault(m => (m.userid == user.id));
+					if(userAddress!=null)
+					{
+						userInfo.AddressLine = userAddress.addressLine;
+						userInfo.Country = userAddress.country;
+						userInfo.State = userAddress.state;
+						userInfo.City = userAddress.city;
+						userInfo.Zipcode = userAddress.zipcode;
+						userInfo.Lat = userAddress.lat;
+						userInfo.Lon = userAddress.@long;
+					}
 				}
 				else
 				{

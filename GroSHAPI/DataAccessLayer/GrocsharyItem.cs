@@ -24,6 +24,7 @@ namespace DataAccessLayer
         public System.DateTime createdDate { get; set; }
         public System.DateTime modifiedDate { get; set; }
         public string ItemName { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual UsersInfo UsersInfo { get; set; }
     }

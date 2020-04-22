@@ -13,7 +13,14 @@ namespace DTO.Models
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
+		public string AddressLine { get; set; }
+		public string City { get; set; }
+		public string State { get; set; }
+		public string Country { get; set; }
+		public string Zipcode { get; set; }
 		public bool IsValid { get; set; }
+		public string Lat { get; set; }
+		public string Lon { get; set; }
 	}
 
 	public class UserDetails

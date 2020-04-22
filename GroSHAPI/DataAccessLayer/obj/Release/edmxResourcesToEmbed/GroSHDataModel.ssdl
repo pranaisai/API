@@ -21,6 +21,7 @@
     <Property Name="lon" Type="nvarchar" MaxLength="50" />
     <Property Name="createdDate" Type="datetime" Nullable="false" />
     <Property Name="modifiedDate" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="SendReceiveRequest">
     <Key>
@@ -83,7 +84,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SendRecei__sentF__3B75D760">
+  <Association Name="FK__SendRecei__sentF__5EBF139D">
+    <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
+    <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersInfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SendReceiveRequest">
+        <PropertyRef Name="sentFrom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SendRecei__sentF__656C112C">
     <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
     <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
     <ReferentialConstraint>
@@ -134,6 +147,24 @@
     <Parameter Name="lon" Type="nvarchar" Mode="In" />
     <Parameter Name="result" Type="int" Mode="InOut" />
   </Function>
+  <Function Name="Distance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+    <Parameter Name="lat1" Type="float" Mode="In" />
+    <Parameter Name="long1" Type="float" Mode="In" />
+    <Parameter Name="lat2" Type="float" Mode="In" />
+    <Parameter Name="long2" Type="float" Mode="In" />
+  </Function>
+  <Function Name="GetItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lat" Type="nvarchar" Mode="In" />
+    <Parameter Name="lon" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetMyItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="GroSHDBModelStoreContainer">
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
@@ -145,7 +176,11 @@
       <End Role="UsersInfo" EntitySet="UsersInfo" />
       <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
     </AssociationSet>
-    <AssociationSet Name="FK__SendRecei__sentF__3B75D760" Association="Self.FK__SendRecei__sentF__3B75D760">
+    <AssociationSet Name="FK__SendRecei__sentF__5EBF139D" Association="Self.FK__SendRecei__sentF__5EBF139D">
+      <End Role="UsersInfo" EntitySet="UsersInfo" />
+      <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SendRecei__sentF__656C112C" Association="Self.FK__SendRecei__sentF__656C112C">
       <End Role="UsersInfo" EntitySet="UsersInfo" />
       <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
     </AssociationSet>

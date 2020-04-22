@@ -31,13 +31,21 @@ namespace GroSHAPI.App_Start
 				var identity = new ClaimsIdentity( context.Options.AuthenticationType);
 				identity.AddClaim(new Claim(Utility.Constants.UserName, context.UserName));
 				identity.AddClaim(new Claim(Utility.Constants.Password, context.Password));
+				//identity.AddClaim(new Claim(Utility.Constants.UserId, user.UserId));
 				var props = new AuthenticationProperties(new Dictionary<string, string>
 				{
 					{ Utility.Constants.FirstName, user.FirstName },
 					{ Utility.Constants.LastName, user.LastName },
 					{ Utility.Constants.Email, user.Email },
 					{ Utility.Constants.Phone, user.Phone},
-					{ Utility.Constants.UserId, user.UserId }
+					{ Utility.Constants.UserId, user.UserId },
+					{ Utility.Constants.AddressLine, user.AddressLine },
+					{ Utility.Constants.Country, user.Country },
+					{ Utility.Constants.State, user.State },
+					{ Utility.Constants.City, user.City},
+					{ Utility.Constants.Zipcode, user.Zipcode },
+					{ Utility.Constants.Lat, user.Lat},
+					{ Utility.Constants.Lon, user.Lon }
 				});
 				var ticket = new AuthenticationTicket(identity, props);
 				context.Validated(ticket);

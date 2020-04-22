@@ -112,7 +112,7 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItems_Result>("GetItems", latParameter, lonParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter);
         }
     
-        public virtual ObjectResult<GetMyItems_Result> GetMyItems(Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
+        public virtual ObjectResult<GetMyItems_Result1> GetMyItems(Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
         {
             var pageNumberParameter = pageNumber.HasValue ?
                 new ObjectParameter("PageNumber", pageNumber) :
@@ -126,7 +126,7 @@ namespace DataAccessLayer
                 new ObjectParameter("userId", userId) :
                 new ObjectParameter("userId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result1>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
         }
     }
 }

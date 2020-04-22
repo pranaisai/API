@@ -26,6 +26,7 @@
           <Property Name="lon" Type="nvarchar" MaxLength="50" />
           <Property Name="createdDate" Type="datetime" Nullable="false" />
           <Property Name="modifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="SendReceiveRequest">
           <Key>
@@ -88,7 +89,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SendRecei__sentF__3B75D760">
+        <Association Name="FK__SendRecei__sentF__5EBF139D">
+          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
+          <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersInfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SendReceiveRequest">
+              <PropertyRef Name="sentFrom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SendRecei__sentF__656C112C">
           <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
           <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -168,7 +181,11 @@
             <End Role="UsersInfo" EntitySet="UsersInfo" />
             <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__3B75D760" Association="Self.FK__SendRecei__sentF__3B75D760">
+          <AssociationSet Name="FK__SendRecei__sentF__5EBF139D" Association="Self.FK__SendRecei__sentF__5EBF139D">
+            <End Role="UsersInfo" EntitySet="UsersInfo" />
+            <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SendRecei__sentF__656C112C" Association="Self.FK__SendRecei__sentF__656C112C">
             <End Role="UsersInfo" EntitySet="UsersInfo" />
             <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
           </AssociationSet>
@@ -230,7 +247,7 @@
             <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
             <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetMyItems" ReturnType="Collection(GroSHDBModel.GetMyItems_Result)">
+          <FunctionImport Name="GetMyItems" ReturnType="Collection(GroSHDBModel.GetMyItems_Result1)">
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
             <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
             <Parameter Name="userId" Mode="In" Type="Int32" />
@@ -251,6 +268,7 @@
           <Property Name="modifiedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UsersInfo" Relationship="GroSHDBModel.FK__Grocshary__user___36B12243" FromRole="GrocsharyItem" ToRole="UsersInfo" />
           <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="SendReceiveRequest">
           <Key>
@@ -378,6 +396,14 @@
           <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="GetMyItems_Result1">
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -387,6 +413,7 @@
           <EntitySetMapping Name="GrocsharyItems">
             <EntityTypeMapping TypeName="GroSHDBModel.GrocsharyItem">
               <MappingFragment StoreEntitySet="GrocsharyItem">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
@@ -476,12 +503,13 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetMyItems" FunctionName="GroSHDBModel.Store.GetMyItems">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result">
+              <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result1">
                 <ScalarProperty Name="itemId" ColumnName="itemId" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
                 <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
                 <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

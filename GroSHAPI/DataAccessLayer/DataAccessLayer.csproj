@@ -61,6 +61,9 @@
     <Compile Include="GetMyItems_Result.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetMyItems_Result1.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GrocsharyItem.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>

@@ -20,7 +20,7 @@ namespace GroSHAPI.App_Start
 
 				TokenEndpointPath = new PathString("/api/Login"),
 				Provider = new ApplicationAuthProvider(),
-				AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
+				AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
 				AllowInsecureHttp = true
 			};
 			app.UseOAuthAuthorizationServer(option);
