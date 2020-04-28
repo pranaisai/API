@@ -20,67 +20,67 @@ namespace Utility
 		{
 			try
 			{
-				//SmtpClient smtpClient = new SmtpClient();
-				//NetworkCredential NetworkCred = new NetworkCredential("rakesh22maurya@gmail.com", "manni@07051993");
-				//smtpClient.Port = 587;
-				//smtpClient.Credentials = NetworkCred;
-				//smtpClient.Host= "smtp.gmail.com";
-				//MailMessage mailMessage = new MailMessage
-				//{
-				//	Subject = emailModel.Subject,
-				//	Body = emailModel.Body,
-				//};
-				//string[] ToEmail = emailModel.ToEmail.Split(',');
-				//foreach (var item in ToEmail)
-				//{
-				//	mailMessage.To.Add(new MailAddress(item.ToString()));
-				//}
-				//if (!string.IsNullOrEmpty(emailModel.BCCEmail))
-				//{
-				//	string[] BCCEmail = emailModel.BCCEmail.Split(',');
-				//	foreach (var item in BCCEmail)
-				//	{
-				//		mailMessage.Bcc.Add(new MailAddress(item.ToString()));
-				//	}
-				//}
-				//if (!string.IsNullOrEmpty(emailModel.CCEmail))
-				//{
-				//	//mailMessage.Bcc.Add(new MailAddress("sender@mail.com"));
-				//	string[] CCEmail = emailModel.CCEmail.Split(',');
-				//	foreach (var item in CCEmail)
-				//	{
-				//		mailMessage.CC.Add(new MailAddress(item.ToString()));
-				//	}
-				//}
-				//// mailMessage.CC.Add(new MailAddress("sender@mail.com"));
-				//mailMessage.Priority = MailPriority.High;
-				//mailMessage.IsBodyHtml = true;
-				//smtpClient.EnableSsl = true;
-				//smtpClient.UseDefaultCredentials = true;
-				//smtpClient.Send(mailMessage);
-				//return true;
-
-				using (MailMessage mm = new MailMessage("rakesh22maurya@gmail.com", emailModel.ToEmail))
+				SmtpClient smtpClient = new SmtpClient();
+				NetworkCredential NetworkCred = new NetworkCredential("rakesh22maurya@gmail.com", "manni@07051993");
+				smtpClient.Port = 587;
+				smtpClient.Credentials = NetworkCred;
+				smtpClient.Host = "smtp.gmail.com";
+				MailMessage mailMessage = new MailMessage
 				{
-					mm.Subject = emailModel.OTP;
-					mm.Body = emailModel.OTP;
-					
-					mm.IsBodyHtml = false;
-					SmtpClient smtp = new SmtpClient();
-					//smtp.Host = "smtp.gmail.com";
-					smtp.EnableSsl = true;
-					NetworkCredential NetworkCred = new NetworkCredential("rakesh22maurya@gmail.com", "manni@07051993");
-					smtp.UseDefaultCredentials = true;
-					smtp.Credentials = NetworkCred;
-					//smtp.Port = 587;
-					smtp.Host = "relay-hosting.secureserver.net";
-					smtp.Port = 25;
-
-					smtp.Send(mm);
-					return true;
+					Subject = emailModel.Subject,
+					Body = emailModel.Body,
+				};
+				string[] ToEmail = emailModel.ToEmail.Split(',');
+				foreach (var item in ToEmail)
+				{
+					mailMessage.To.Add(new MailAddress(item.ToString()));
 				}
+				if (!string.IsNullOrEmpty(emailModel.BCCEmail))
+				{
+					string[] BCCEmail = emailModel.BCCEmail.Split(',');
+					foreach (var item in BCCEmail)
+					{
+						mailMessage.Bcc.Add(new MailAddress(item.ToString()));
+					}
+				}
+				if (!string.IsNullOrEmpty(emailModel.CCEmail))
+				{
+					//mailMessage.Bcc.Add(new MailAddress("sender@mail.com"));
+					string[] CCEmail = emailModel.CCEmail.Split(',');
+					foreach (var item in CCEmail)
+					{
+						mailMessage.CC.Add(new MailAddress(item.ToString()));
+					}
+				}
+				// mailMessage.CC.Add(new MailAddress("sender@mail.com"));
+				mailMessage.Priority = MailPriority.High;
+				mailMessage.IsBodyHtml = true;
+				smtpClient.EnableSsl = true;			
+				smtpClient.UseDefaultCredentials = true;
+				smtpClient.Send(mailMessage);
+				return true;
+
+				//using (MailMessage mm = new MailMessage("rakesh22maurya@gmail.com", emailModel.ToEmail))
+				//{
+				//	mm.Subject = emailModel.OTP;
+				//	mm.Body = emailModel.OTP;
+
+				//	mm.IsBodyHtml = false;
+				//	SmtpClient smtp = new SmtpClient();
+				//	//smtp.Host = "smtp.gmail.com";
+				//	smtp.EnableSsl = true;
+				//	NetworkCredential NetworkCred = new NetworkCredential("richtech.cocialmedia@gmail.com", "richtech@2017");
+				//	smtp.UseDefaultCredentials = true;
+				//	smtp.Credentials = NetworkCred;
+				//	//smtp.Port = 587;
+				//	smtp.Host = "relay-hosting.secureserver.net";
+				//	smtp.Port = 25;
+
+				//	smtp.Send(mm);
+				//	return true;
+				//}
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
 				return false;
 			}

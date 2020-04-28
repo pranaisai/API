@@ -55,6 +55,9 @@
     <Compile Include="Country.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetItemsWithFilter_Result.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetItems_Result.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>

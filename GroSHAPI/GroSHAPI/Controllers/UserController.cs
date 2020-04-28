@@ -63,7 +63,7 @@ namespace GroSHAPI.Controllers
 					EmailModel emailModel = new EmailModel();
 					emailModel.ToEmail = email;
 					emailModel.Body = otp;
-					bool output = true; //Utility.Common.SendEmail(emailModel);
+					bool output = Utility.Common.SendEmail(emailModel);
 					if (output)
 					{
 						response.SatusCode = 200;

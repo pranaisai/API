@@ -104,5 +104,18 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetItemsWithFilter" FunctionName="GroSHDBModel.Store.GetItemsWithFilter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GroSHDBModel.GetItemsWithFilter_Result">
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+          <ScalarProperty Name="imageName" ColumnName="imageName" />
+          <ScalarProperty Name="distance" ColumnName="distance" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

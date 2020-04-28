@@ -11,7 +11,8 @@ namespace DataAccessLayer
 	{
 		int AddGroSHItem(GrocSHItem grocShItem);
 		int UpdateImageName(int itemId,string imageName);
-		List<Item> GetItems(string lat, string lon,int pageNumber,int rowsPerPage, int userId);
+		List<Item> GetItems(string lat, string lon, int distance,int pageNumber,int rowsPerPage, int userId);
 		List<Item> GetMyItems( int pageNumber, int rowsPerPage, int userId);
+		List<Item> GetFilterItems(string lat, string lon, int distance, int pageNumber, int rowsPerPage, int userId, string searchKey);
 	}
 }

@@ -156,9 +156,19 @@
   <Function Name="GetItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="lat" Type="nvarchar" Mode="In" />
     <Parameter Name="lon" Type="nvarchar" Mode="In" />
+    <Parameter Name="distance" Type="int" Mode="In" />
     <Parameter Name="PageNumber" Type="int" Mode="In" />
     <Parameter Name="RowsPerPage" Type="int" Mode="In" />
     <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetItemsWithFilter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lat" Type="nvarchar" Mode="In" />
+    <Parameter Name="lon" Type="nvarchar" Mode="In" />
+    <Parameter Name="distance" Type="int" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+    <Parameter Name="userId" Type="int" Mode="In" />
+    <Parameter Name="searchKey" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="GetMyItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="PageNumber" Type="int" Mode="In" />

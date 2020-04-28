@@ -24,7 +24,7 @@ namespace DataAccessLayer
 				{
 					if (grocShItem.ItemId == 0)
 					{
-						db.GrocsharyItems.Add(new GrocsharyItem()
+					var result= db.GrocsharyItems.Add(new GrocsharyItem()
 						{
 							ItemName = grocShItem.ItemName,
 							user_id = grocShItem.user_id,
@@ -38,7 +38,7 @@ namespace DataAccessLayer
 							IsActive = true
 						});
 						flag = db.SaveChanges();
-						flag = (from record in db.GrocsharyItems orderby record.itemId select record.itemId).Last();
+						flag = result.itemId;
 					}
 					else
 					{
@@ -51,6 +51,7 @@ namespace DataAccessLayer
 						c.imageName = grocShItem.ImageName;
 						c.IsActive = grocShItem.IsActive;
 						flag = db.SaveChanges();
+						flag = grocShItem.ItemId;
 					}
 				}
 			}
@@ -69,7 +70,7 @@ namespace DataAccessLayer
 		/// <param name="rowsPerPage"></param>
 		/// <param name="userId"></param>
 		/// <returns></returns>
-		public List<Item> GetItems(string lat, string lon, int pageNumber, int rowsPerPage, int userId)
+		public List<Item> GetItems(string lat, string lon, int distance, int pageNumber, int rowsPerPage, int userId)
 		{
 			List<Item> items = new List<Item>();
 			try
@@ -79,7 +80,7 @@ namespace DataAccessLayer
 					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 					var root = ctx + "/ItemImages";
 
-					var result = (from grocShItem in db.GetItems(lat, lon, pageNumber, rowsPerPage, userId)
+					var result = (from grocShItem in db.GetItems(lat, lon,distance, pageNumber, rowsPerPage, userId)
 								  select grocShItem).ToList();
 
 					if (result != null)
@@ -92,10 +93,62 @@ namespace DataAccessLayer
 							data.ItemDescription = item.itemDescription;
 							data.ExchangeItem = item.exchangeItem;
 							data.ImageName = item.imageName;
-							data.Distance = item.distance;							
+							data.Distance = item.distance;
+							data.IsActive = true;
 							if (!string.IsNullOrEmpty(item.imageName))
 							{
 								data.ImageUrl = root + "/" + item.imageName;
+							}
+							else
+							{
+								data.ImageUrl = string.Empty;
+							}
+							items.Add(data);
+						}
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.StackTrace);
+			}
+			return items;
+			//a=(from x in db.procname()select new a(){a.name=x.nze}).tolist();
+		}
+
+		public List<Item> GetFilterItems(string lat, string lon, int distance, int pageNumber, int rowsPerPage, int userId,string searchKey)
+		{
+			List<Item> items = new List<Item>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+					var root = ctx + "/ItemImages";
+
+					var result = (from grocShItem in db.GetItemsWithFilter(lat, lon, distance, pageNumber, rowsPerPage, userId,searchKey)
+								  select grocShItem).ToList();
+
+					if (result != null)
+					{
+						foreach (var item in result)
+						{
+							Item data = new Item();
+							data.ItemId = item.itemId;
+							data.ItemName = item.ItemName;
+							data.ItemDescription = item.itemDescription;
+							data.ExchangeItem = item.exchangeItem;
+							data.ImageName = item.imageName;
+							data.Distance = item.distance;
+							data.IsActive = item.IsActive;
+							if (!string.IsNullOrEmpty(item.imageName))
+							{
+								data.ImageUrl = root + "/" + item.imageName;
+							}
+							else
+							{
+								data.ImageUrl = string.Empty;
 							}
 							items.Add(data);
 						}
@@ -140,10 +193,14 @@ namespace DataAccessLayer
 							data.ItemDescription = item.itemDescription;
 							data.ExchangeItem = item.exchangeItem;
 							data.ImageName = item.imageName;
-							data.IsActive = item.IsActive;						
+							data.IsActive = item.IsActive;
 							if (!string.IsNullOrEmpty(item.imageName))
 							{
-								data.ImageUrl = root+"/"+item.imageName;
+								data.ImageUrl = root + "/" + item.imageName;
+							}
+							else
+							{
+								data.ImageUrl = string.Empty;
 							}
 							items.Add(data);
 						}

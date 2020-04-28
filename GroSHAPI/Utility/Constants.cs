@@ -24,8 +24,10 @@ namespace Utility
 		public const string Zipcode = "zipcode";
 		public const string Lat = "lat";
 		public const string Lon = "lon";
-		public const string SuccessMesg = "Record Inserted Successfully";
-		public const string UpdateMesg = "Record Updated Successfully";
+		public const string ItemSuccessMesg = "Item inserted successfully";
+		public const string ItemUpdateMesg = "Item updated successfully";
+		public const string SuccessMesg = "Registration completed successfully";
+		public const string UpdateMesg = "Record updated successfully";
 		public const string UserAlreadyExist = "User already exist";
 		public const string FailedMesg = "Something went wrong please try again";
 		public const string EncryptKey = "XYZ25855354";

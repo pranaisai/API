@@ -41,6 +41,7 @@
     <FunctionImport Name="GetItems" ReturnType="Collection(GroSHDBModel.GetItems_Result)">
       <Parameter Name="lat" Mode="In" Type="String" />
       <Parameter Name="lon" Mode="In" Type="String" />
+      <Parameter Name="distance" Mode="In" Type="Int32" />
       <Parameter Name="PageNumber" Mode="In" Type="Int32" />
       <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
       <Parameter Name="userId" Mode="In" Type="Int32" />
@@ -49,6 +50,15 @@
       <Parameter Name="PageNumber" Mode="In" Type="Int32" />
       <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
       <Parameter Name="userId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetItemsWithFilter" ReturnType="Collection(GroSHDBModel.GetItemsWithFilter_Result)">
+      <Parameter Name="lat" Mode="In" Type="String" />
+      <Parameter Name="lon" Mode="In" Type="String" />
+      <Parameter Name="distance" Mode="In" Type="Int32" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+      <Parameter Name="userId" Mode="In" Type="Int32" />
+      <Parameter Name="searchKey" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="GrocsharyItem">
@@ -200,6 +210,15 @@
     <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
     <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
     <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+    <Property Type="Boolean" Name="IsActive" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetItemsWithFilter_Result">
+    <Property Type="Int32" Name="itemId" Nullable="false" />
+    <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+    <Property Type="Double" Name="distance" Nullable="true" />
     <Property Type="Boolean" Name="IsActive" Nullable="true" />
   </ComplexType>
 </Schema>

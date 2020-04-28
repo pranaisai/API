@@ -23,7 +23,7 @@ namespace GroSHAPI.Controllers
 
 		[HttpPost]
 		[Route("UploadFile")]
-		//[Authorize]
+		[Authorize]
 		public async Task<string> UploadFile()
 		{
 			string userID = string.Empty;
@@ -61,7 +61,9 @@ namespace GroSHAPI.Controllers
 					}
 					else
 					{
-						result = "AlreadyExists";
+						File.Delete(filePath);
+						File.Move(localFileName, filePath);
+						result = "Success";
 					}
 				}
 			}

@@ -161,9 +161,19 @@
         <Function Name="GetItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="lat" Type="nvarchar" Mode="In" />
           <Parameter Name="lon" Type="nvarchar" Mode="In" />
+          <Parameter Name="distance" Type="int" Mode="In" />
           <Parameter Name="PageNumber" Type="int" Mode="In" />
           <Parameter Name="RowsPerPage" Type="int" Mode="In" />
           <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetItemsWithFilter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lat" Type="nvarchar" Mode="In" />
+          <Parameter Name="lon" Type="nvarchar" Mode="In" />
+          <Parameter Name="distance" Type="int" Mode="In" />
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+          <Parameter Name="RowsPerPage" Type="int" Mode="In" />
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="searchKey" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetMyItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageNumber" Type="int" Mode="In" />
@@ -243,6 +253,7 @@
           <FunctionImport Name="GetItems" ReturnType="Collection(GroSHDBModel.GetItems_Result)">
             <Parameter Name="lat" Mode="In" Type="String" />
             <Parameter Name="lon" Mode="In" Type="String" />
+            <Parameter Name="distance" Mode="In" Type="Int32" />
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
             <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
             <Parameter Name="userId" Mode="In" Type="Int32" />
@@ -251,6 +262,15 @@
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
             <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
             <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetItemsWithFilter" ReturnType="Collection(GroSHDBModel.GetItemsWithFilter_Result)">
+            <Parameter Name="lat" Mode="In" Type="String" />
+            <Parameter Name="lon" Mode="In" Type="String" />
+            <Parameter Name="distance" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="searchKey" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="GrocsharyItem">
@@ -404,6 +424,15 @@
           <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsActive" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetItemsWithFilter_Result">
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="distance" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -509,6 +538,19 @@
                 <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
                 <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
                 <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetItemsWithFilter" FunctionName="GroSHDBModel.Store.GetItemsWithFilter">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.GetItemsWithFilter_Result">
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
