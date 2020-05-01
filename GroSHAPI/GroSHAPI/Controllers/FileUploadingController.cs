@@ -21,15 +21,19 @@ namespace GroSHAPI.Controllers
 			this._grocSHItemBusinessLayer = grocSHItemBusinessLayer;
 		}
 
+		/// <summary>
+		/// This end points is used to uplod images on server
+		/// </summary>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("UploadFile")]
 		[Authorize]
 		public async Task<string> UploadFile()
 		{
-			string userID = string.Empty;
+			string itemId = string.Empty;
 			string result = string.Empty;
 			var ctx = HttpContext.Current;
-			var root = ctx.Server.MapPath("~/ItemImages");
+			var root = ctx.Server.MapPath(Utility.Constants.ImageFolder);
 			var provider = new MultipartFormDataStreamProvider(root);
 			try
 			{
@@ -37,7 +41,7 @@ namespace GroSHAPI.Controllers
 				System.Collections.Specialized.NameValueCollection formData = provider.FormData;
 				if (formData.HasKeys() == true)
 				{
-					 userID = formData["ItemID"];
+					 itemId = formData[Utility.Constants.ItemID];
 				}
 				foreach (var file in provider.FileData)
 				{
@@ -49,21 +53,21 @@ namespace GroSHAPI.Controllers
 					if (!File.Exists(filePath))
 					{
 						File.Move(localFileName, filePath);
-						var output = this._grocSHItemBusinessLayer.UpdateImageName(Convert.ToInt32(userID), name);
+						var output = this._grocSHItemBusinessLayer.UpdateImageName(Convert.ToInt32(itemId), name);
 						if (output == 1)
 						{
-							result = "Success";
+							result = Utility.Constants.Success;
 						}
 						else
 						{
-							result = "Failed";
+							result = Utility.Constants.Failed;
 						}
 					}
 					else
 					{
 						File.Delete(filePath);
 						File.Move(localFileName, filePath);
-						result = "Success";
+						result = Utility.Constants.Success;
 					}
 				}
 			}

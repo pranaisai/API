@@ -19,6 +19,11 @@ namespace GroSHAPI.Controllers
 			this._grocSHItemBusinessLayer = grocSHItemBusinessLayer;
 		}
 
+		/// <summary>
+		/// This end points is use to add/update items
+		/// </summary>
+		/// <param name="grocSHItem"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public HttpResponseMessage AddUpdateGroshItem(GrocSHItem grocSHItem)
 		{
@@ -42,7 +47,7 @@ namespace GroSHAPI.Controllers
 			return Request.CreateResponse(response);// Ok(response);
 		}
 		/// <summary>
-		/// Get Item list
+		/// This end points is used to get items
 		/// </summary>
 		/// <param name="lat"></param>
 		/// <param name="lon"></param>
@@ -72,7 +77,7 @@ namespace GroSHAPI.Controllers
 		}
 
 		/// <summary>
-		/// Get My item list
+		/// This end point is used to get my item list
 		/// </summary>
 		/// <param name="pageNumber"></param>
 		/// <param name="numberOfRow"></param>
@@ -99,7 +104,7 @@ namespace GroSHAPI.Controllers
 		}
 
 		/// <summary>
-		/// Get filter item list
+		/// This end point is used to get filter item list
 		/// </summary>
 		/// <param name="lat"></param>
 		/// <param name="lon"></param>

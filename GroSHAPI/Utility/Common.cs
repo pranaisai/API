@@ -1,6 +1,7 @@
 ﻿using DTO.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -20,16 +21,17 @@ namespace Utility
 		{
 			try
 			{
-				SmtpClient smtpClient = new SmtpClient();
-				NetworkCredential NetworkCred = new NetworkCredential("rakesh22maurya@gmail.com", "manni@07051993");
-				smtpClient.Port = 587;
-				smtpClient.Credentials = NetworkCred;
-				smtpClient.Host = "smtp.gmail.com";
+				SmtpClient smtpClient = new SmtpClient();				
+				NetworkCredential NetworkCred = new NetworkCredential(Constants.GmailAccount, Constants.GmailPassword);
+				smtpClient.Port = 587;				
+				smtpClient.Host = "smtp.googlemail.com";
 				MailMessage mailMessage = new MailMessage
 				{
 					Subject = emailModel.Subject,
 					Body = emailModel.Body,
-				};
+				};				
+				MailAddress ma = new MailAddress(Constants.GmailAccount, Constants.ShareMyBasket);
+				mailMessage.From = ma;
 				string[] ToEmail = emailModel.ToEmail.Split(',');
 				foreach (var item in ToEmail)
 				{
@@ -44,41 +46,20 @@ namespace Utility
 					}
 				}
 				if (!string.IsNullOrEmpty(emailModel.CCEmail))
-				{
-					//mailMessage.Bcc.Add(new MailAddress("sender@mail.com"));
+				{				
 					string[] CCEmail = emailModel.CCEmail.Split(',');
 					foreach (var item in CCEmail)
 					{
 						mailMessage.CC.Add(new MailAddress(item.ToString()));
 					}
-				}
-				// mailMessage.CC.Add(new MailAddress("sender@mail.com"));
+				}				
 				mailMessage.Priority = MailPriority.High;
 				mailMessage.IsBodyHtml = true;
 				smtpClient.EnableSsl = true;			
-				smtpClient.UseDefaultCredentials = true;
+				smtpClient.UseDefaultCredentials = false;
+				smtpClient.Credentials = NetworkCred;
 				smtpClient.Send(mailMessage);
-				return true;
-
-				//using (MailMessage mm = new MailMessage("rakesh22maurya@gmail.com", emailModel.ToEmail))
-				//{
-				//	mm.Subject = emailModel.OTP;
-				//	mm.Body = emailModel.OTP;
-
-				//	mm.IsBodyHtml = false;
-				//	SmtpClient smtp = new SmtpClient();
-				//	//smtp.Host = "smtp.gmail.com";
-				//	smtp.EnableSsl = true;
-				//	NetworkCredential NetworkCred = new NetworkCredential("richtech.cocialmedia@gmail.com", "richtech@2017");
-				//	smtp.UseDefaultCredentials = true;
-				//	smtp.Credentials = NetworkCred;
-				//	//smtp.Port = 587;
-				//	smtp.Host = "relay-hosting.secureserver.net";
-				//	smtp.Port = 25;
-
-				//	smtp.Send(mm);
-				//	return true;
-				//}
+				return true;				
 			}
 			catch(Exception ex)
 			{

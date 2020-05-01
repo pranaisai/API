@@ -14,15 +14,22 @@ namespace BusinessLayer
 		public UserBusinessLayer(IUserDataAccess userAccessDataLayer)
 		{
 			this._userDataAccessLayer = userAccessDataLayer;
-		}
-
-		
-
+		}	
+		/// <summary>
+		/// User registrtion method
+		/// </summary>
+		/// <param name="userDetail"></param>
+		/// <returns></returns>
 		public int UserRegistration(UserDetails userDetail)
 		{
 			return this._userDataAccessLayer.UserRegistration(userDetail);
 		}
 
+		/// <summary>
+		/// Send Email
+		/// </summary>
+		/// <param name="email"></param>
+		/// <returns></returns>
 		public int SendEmail(string email)
 		{
 			return this._userDataAccessLayer.SendEmail(email);

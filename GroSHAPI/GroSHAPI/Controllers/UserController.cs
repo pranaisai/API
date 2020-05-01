@@ -19,7 +19,11 @@ namespace GroSHAPI.Controllers
 			this._userBusinessLayer = userBusinessLayer;
 		}
 
-		//[AllowAnonymous]
+		/// <summary>
+		/// This end point use to register new users
+		/// </summary>
+		/// <param name="userDetails"></param>
+		/// <returns></returns>
 		[HttpPost]		
 		public HttpResponseMessage UserRegistration(UserDetails userDetails)
 		{
@@ -46,10 +50,14 @@ namespace GroSHAPI.Controllers
 					response.Message = Utility.Constants.FailedMesg;
 				}
 			}
-			return Request.CreateResponse(response);// Ok(response);
+			return Request.CreateResponse(response);
 		}
 
-		//[AllowAnonymous]
+		/// <summary>
+		/// This end point is used to send email
+		/// </summary>
+		/// <param name="email"></param>
+		/// <returns></returns>
 		[HttpPost]		
 		public HttpResponseMessage SendEmail([FromUri] string email)
 		{
@@ -62,7 +70,8 @@ namespace GroSHAPI.Controllers
 					string otp = Utility.Common.RandomString(4,true);
 					EmailModel emailModel = new EmailModel();
 					emailModel.ToEmail = email;
-					emailModel.Body = otp;
+					emailModel.Subject = Utility.Constants.ShareMyBasket;
+					emailModel.Body =Utility.Constants.Mailbody+ otp;
 					bool output = Utility.Common.SendEmail(emailModel);
 					if (output)
 					{
