@@ -28,6 +28,8 @@ C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AI.WindowsServe
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.ApplicationInsights.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.Owin.Cors.dll
@@ -71,6 +73,8 @@ C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AI.WindowsServe
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.ApplicationInsights.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.Owin.xml
 C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\GroSHAPI\bin\Microsoft.Owin.Cors.xml

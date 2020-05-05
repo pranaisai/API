@@ -22,7 +22,7 @@ namespace Utility
 			try
 			{
 				SmtpClient smtpClient = new SmtpClient();				
-				NetworkCredential NetworkCred = new NetworkCredential(Constants.GmailAccount, Constants.GmailPassword);
+				NetworkCredential NetworkCred = new NetworkCredential("richtech.socialmedia@gmail.com", "richtech@2017");
 				smtpClient.Port = 587;				
 				smtpClient.Host = "smtp.googlemail.com";
 				MailMessage mailMessage = new MailMessage
@@ -30,7 +30,7 @@ namespace Utility
 					Subject = emailModel.Subject,
 					Body = emailModel.Body,
 				};				
-				MailAddress ma = new MailAddress(Constants.GmailAccount, Constants.ShareMyBasket);
+				MailAddress ma = new MailAddress("richtech.socialmedia@gmail.com", "ShareMyBasket");
 				mailMessage.From = ma;
 				string[] ToEmail = emailModel.ToEmail.Split(',');
 				foreach (var item in ToEmail)

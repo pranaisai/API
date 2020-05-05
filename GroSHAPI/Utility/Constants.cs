@@ -35,8 +35,8 @@ namespace Utility
 		public const string EmailExists = "The verification code has been sent to your registerd email";
 		public const string EmailBlank = "Email can not left blank";
 		public const string PassReset = "Password reset successfully";
-		public const string GmailAccount = "richtech.socialmedia@gmail.com";
-		public const string GmailPassword = "richtech@2017";
+		public const string GmailAccount = "rakesh22maurya@gmail.com";// "richtech.socialmedia@gmail.com";
+		public const string GmailPassword = "manni@07051993";// "richtech@2017";
 		public const string ShareMyBasket = "ShareMyBasket";
 		public const string Mailbody = "Sent from ShareMyBasket- Hello your OTP is ";
 		public const string ItemID = "ItemID";

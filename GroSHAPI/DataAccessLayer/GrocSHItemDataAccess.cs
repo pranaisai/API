@@ -24,7 +24,7 @@ namespace DataAccessLayer
 				{
 					if (grocShItem.ItemId == 0)
 					{
-					var result= db.GrocsharyItems.Add(new GrocsharyItem()
+						var result = db.GrocsharyItems.Add(new GrocsharyItem()
 						{
 							ItemName = grocShItem.ItemName,
 							user_id = grocShItem.user_id,
@@ -45,11 +45,12 @@ namespace DataAccessLayer
 						GrocsharyItem c = (from x in db.GrocsharyItems
 										   where x.itemId == grocShItem.ItemId
 										   select x).First();
-						c.ItemName = grocShItem.ImageName;
+						c.ItemName = grocShItem.ItemName;
 						c.itemDescription = grocShItem.ItemDescription;
 						c.exchangeItem = grocShItem.ExchangeItem;
-						c.imageName = grocShItem.ImageName;
+						//c.imageName = grocShItem.ImageName;
 						c.IsActive = grocShItem.IsActive;
+						c.modifiedDate = DateTime.Now;
 						flag = db.SaveChanges();
 						flag = grocShItem.ItemId;
 					}
@@ -80,7 +81,7 @@ namespace DataAccessLayer
 					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 					var root = ctx + "/ItemImages";
 
-					var result = (from grocShItem in db.GetItems(lat, lon,distance, pageNumber, rowsPerPage, userId)
+					var result = (from grocShItem in db.GetItems(lat, lon, distance, pageNumber, rowsPerPage, userId)
 								  select grocShItem).ToList();
 
 					if (result != null)
@@ -117,7 +118,7 @@ namespace DataAccessLayer
 			//a=(from x in db.procname()select new a(){a.name=x.nze}).tolist();
 		}
 
-		public List<Item> GetFilterItems(string lat, string lon, int distance, int pageNumber, int rowsPerPage, int userId,string searchKey)
+		public List<Item> GetFilterItems(string lat, string lon, int distance, int pageNumber, int rowsPerPage, int userId, string searchKey)
 		{
 			List<Item> items = new List<Item>();
 			try
@@ -126,31 +127,62 @@ namespace DataAccessLayer
 				{
 					var ctx = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
 					var root = ctx + "/ItemImages";
-
-					var result = (from grocShItem in db.GetItemsWithFilter(lat, lon, distance, pageNumber, rowsPerPage, userId,searchKey)
-								  select grocShItem).ToList();
-
-					if (result != null)
+					if (!string.IsNullOrEmpty(searchKey))
 					{
-						foreach (var item in result)
+						var result = (from grocShItem in db.GetItemsWithFilter(lat, lon, distance, pageNumber, rowsPerPage, userId, searchKey)
+									  select grocShItem).ToList();
+
+						if (result != null)
 						{
-							Item data = new Item();
-							data.ItemId = item.itemId;
-							data.ItemName = item.ItemName;
-							data.ItemDescription = item.itemDescription;
-							data.ExchangeItem = item.exchangeItem;
-							data.ImageName = item.imageName;
-							data.Distance = item.distance;
-							data.IsActive = item.IsActive;
-							if (!string.IsNullOrEmpty(item.imageName))
+							foreach (var item in result)
 							{
-								data.ImageUrl = root + "/" + item.imageName;
+								Item data = new Item();
+								data.ItemId = item.itemId;
+								data.ItemName = item.ItemName;
+								data.ItemDescription = item.itemDescription;
+								data.ExchangeItem = item.exchangeItem;
+								data.ImageName = item.imageName;
+								data.Distance = item.distance;
+								data.IsActive = item.IsActive;
+								if (!string.IsNullOrEmpty(item.imageName))
+								{
+									data.ImageUrl = root + "/" + item.imageName;
+								}
+								else
+								{
+									data.ImageUrl = string.Empty;
+								}
+								items.Add(data);
 							}
-							else
+						}
+					}
+					else
+					{
+						var result = (from grocShItem in db.GetItems(lat, lon, distance, pageNumber, rowsPerPage, userId)
+									  select grocShItem).ToList();
+
+						if (result != null)
+						{
+							foreach (var item in result)
 							{
-								data.ImageUrl = string.Empty;
+								Item data = new Item();
+								data.ItemId = item.itemId;
+								data.ItemName = item.ItemName;
+								data.ItemDescription = item.itemDescription;
+								data.ExchangeItem = item.exchangeItem;
+								data.ImageName = item.imageName;
+								data.Distance = item.distance;
+								data.IsActive = true;
+								if (!string.IsNullOrEmpty(item.imageName))
+								{
+									data.ImageUrl = root + "/" + item.imageName;
+								}
+								else
+								{
+									data.ImageUrl = string.Empty;
+								}
+								items.Add(data);
 							}
-							items.Add(data);
 						}
 					}
 
