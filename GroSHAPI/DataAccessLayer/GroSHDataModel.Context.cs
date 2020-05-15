@@ -28,11 +28,11 @@ namespace DataAccessLayer
         }
     
         public virtual DbSet<GrocsharyItem> GrocsharyItems { get; set; }
-        public virtual DbSet<SendReceiveRequest> SendReceiveRequests { get; set; }
         public virtual DbSet<UsersAddress> UsersAddresses { get; set; }
         public virtual DbSet<UsersInfo> UsersInfoes { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<SendReceiveRequest> SendReceiveRequests { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AddNewUser(string firstName, string lastName, string email, string phone, string password, string addressLine, string city, string state, string country, string zipcode, string lat, string lon, ObjectParameter result)
         {
@@ -164,6 +164,24 @@ namespace DataAccessLayer
                 new ObjectParameter("searchKey", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItemsWithFilter_Result>("GetItemsWithFilter", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter, searchKeyParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetNotification_Result> sp_GetNotification(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetNotification_Result>("sp_GetNotification", userIdParameter);
+        }
+    
+        public virtual int sp_TotalRequest(Nullable<int> userId, ObjectParameter result)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TotalRequest", userIdParameter, result);
         }
     }
 }

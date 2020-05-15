@@ -28,12 +28,13 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="sentFrom" Type="int" />
-    <Property Name="senTo" Type="int" />
-    <Property Name="status" Type="binary" MaxLength="1" />
-    <Property Name="sentDate" Type="datetime" />
-    <Property Name="receivedDate" Type="datetime" />
-    <Property Name="acceptedDate" Type="datetime" />
+    <Property Name="itemId" Type="int" Nullable="false" />
+    <Property Name="sender" Type="int" Nullable="false" />
+    <Property Name="receiver" Type="int" />
+    <Property Name="status" Type="int" Nullable="false" />
+    <Property Name="sendDate" Type="datetime" Nullable="false" />
+    <Property Name="acceptOrRejectDate" Type="datetime" Nullable="false" />
+    <Property Name="isSendRequest" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -84,27 +85,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SendRecei__sentF__5EBF139D">
-    <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
+  <Association Name="FK_SendReceiveRequest_GrocsharyItem">
+    <End Role="GrocsharyItem" Type="Self.GrocsharyItem" Multiplicity="1" />
     <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="UsersInfo">
-        <PropertyRef Name="id" />
+      <Principal Role="GrocsharyItem">
+        <PropertyRef Name="itemId" />
       </Principal>
       <Dependent Role="SendReceiveRequest">
-        <PropertyRef Name="sentFrom" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__SendRecei__sentF__656C112C">
-    <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
-    <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UsersInfo">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="SendReceiveRequest">
-        <PropertyRef Name="sentFrom" />
+        <PropertyRef Name="itemId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -175,6 +164,13 @@
     <Parameter Name="RowsPerPage" Type="int" Mode="In" />
     <Parameter Name="userId" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_GetNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_TotalRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+    <Parameter Name="result" Type="int" Mode="InOut" />
+  </Function>
   <EntityContainer Name="GroSHDBModelStoreContainer">
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
@@ -186,12 +182,8 @@
       <End Role="UsersInfo" EntitySet="UsersInfo" />
       <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
     </AssociationSet>
-    <AssociationSet Name="FK__SendRecei__sentF__5EBF139D" Association="Self.FK__SendRecei__sentF__5EBF139D">
-      <End Role="UsersInfo" EntitySet="UsersInfo" />
-      <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
-    </AssociationSet>
-    <AssociationSet Name="FK__SendRecei__sentF__656C112C" Association="Self.FK__SendRecei__sentF__656C112C">
-      <End Role="UsersInfo" EntitySet="UsersInfo" />
+    <AssociationSet Name="FK_SendReceiveRequest_GrocsharyItem" Association="Self.FK_SendReceiveRequest_GrocsharyItem">
+      <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
       <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
     </AssociationSet>
     <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">

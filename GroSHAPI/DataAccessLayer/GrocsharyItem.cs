@@ -14,6 +14,12 @@ namespace DataAccessLayer
     
     public partial class GrocsharyItem
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public GrocsharyItem()
+        {
+            this.SendReceiveRequests = new HashSet<SendReceiveRequest>();
+        }
+    
         public int itemId { get; set; }
         public string itemDescription { get; set; }
         public string exchangeItem { get; set; }
@@ -27,5 +33,7 @@ namespace DataAccessLayer
         public Nullable<bool> IsActive { get; set; }
     
         public virtual UsersInfo UsersInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SendReceiveRequest> SendReceiveRequests { get; set; }
     }
 }

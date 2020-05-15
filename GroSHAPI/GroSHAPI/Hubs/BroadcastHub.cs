@@ -11,23 +11,32 @@ namespace GroSHAPI.Hubs
 {
 	[HubName("BroadcastHub")]
 	public class BroadcastHub : Hub
-	{
-		public async Task NewRequest(string name, string message)
-		{
-			await Clients.All.newMessageRequest(name, message);
-		}
-
+	{		
+		/// <summary>
+		/// This method is used to JoinRoom for chat
+		/// </summary>
+		/// <param name="groupName"></param>
+		/// <returns></returns>
 		public async Task JoinRoom(string groupName)
 		{
 			await Groups.Add(Context.ConnectionId, groupName);
 			await Clients.Group(groupName).Send("Joined");
 		}
 
+		/// <summary>
+		/// This method is used to leave group
+		/// </summary>
+		/// <param name="groupName"></param>
+		/// <returns></returns>
 		public Task LeaveRoom(string groupName)
 		{
 			return Groups.Remove(Context.ConnectionId, groupName);
 		}	
 
+		/// <summary>
+		/// This method is used to join Group
+		/// </summary>
+		/// <param name="objChatModel"></param>
 		public void SendMessage(ChatModel objChatModel)
 		{
 			try

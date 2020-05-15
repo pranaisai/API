@@ -33,12 +33,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="sentFrom" Type="int" />
-          <Property Name="senTo" Type="int" />
-          <Property Name="status" Type="binary" MaxLength="1" />
-          <Property Name="sentDate" Type="datetime" />
-          <Property Name="receivedDate" Type="datetime" />
-          <Property Name="acceptedDate" Type="datetime" />
+          <Property Name="itemId" Type="int" Nullable="false" />
+          <Property Name="sender" Type="int" Nullable="false" />
+          <Property Name="receiver" Type="int" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="sendDate" Type="datetime" Nullable="false" />
+          <Property Name="acceptOrRejectDate" Type="datetime" Nullable="false" />
+          <Property Name="isSendRequest" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="States">
           <Key>
@@ -89,27 +90,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SendRecei__sentF__5EBF139D">
-          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
+        <Association Name="FK_SendReceiveRequest_GrocsharyItem">
+          <End Role="GrocsharyItem" Type="Self.GrocsharyItem" Multiplicity="1" />
           <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UsersInfo">
-              <PropertyRef Name="id" />
+            <Principal Role="GrocsharyItem">
+              <PropertyRef Name="itemId" />
             </Principal>
             <Dependent Role="SendReceiveRequest">
-              <PropertyRef Name="sentFrom" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SendRecei__sentF__656C112C">
-          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="0..1" />
-          <End Role="SendReceiveRequest" Type="Self.SendReceiveRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UsersInfo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SendReceiveRequest">
-              <PropertyRef Name="sentFrom" />
+              <PropertyRef Name="itemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -180,6 +169,13 @@
           <Parameter Name="RowsPerPage" Type="int" Mode="In" />
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_TotalRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="result" Type="int" Mode="InOut" />
+        </Function>
         <EntityContainer Name="GroSHDBModelStoreContainer">
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
@@ -191,12 +187,8 @@
             <End Role="UsersInfo" EntitySet="UsersInfo" />
             <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__5EBF139D" Association="Self.FK__SendRecei__sentF__5EBF139D">
-            <End Role="UsersInfo" EntitySet="UsersInfo" />
-            <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__656C112C" Association="Self.FK__SendRecei__sentF__656C112C">
-            <End Role="UsersInfo" EntitySet="UsersInfo" />
+          <AssociationSet Name="FK_SendReceiveRequest_GrocsharyItem" Association="Self.FK_SendReceiveRequest_GrocsharyItem">
+            <End Role="GrocsharyItem" EntitySet="GrocsharyItem" />
             <End Role="SendReceiveRequest" EntitySet="SendReceiveRequest" />
           </AssociationSet>
           <AssociationSet Name="FK_States_Countries" Association="Self.FK_States_Countries">
@@ -214,16 +206,11 @@
       <Schema Namespace="GroSHDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GroSHDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="GrocsharyItems" EntityType="GroSHDBModel.GrocsharyItem" />
-          <EntitySet Name="SendReceiveRequests" EntityType="GroSHDBModel.SendReceiveRequest" />
           <EntitySet Name="UsersAddresses" EntityType="GroSHDBModel.UsersAddress" />
           <EntitySet Name="UsersInfoes" EntityType="GroSHDBModel.UsersInfo" />
           <AssociationSet Name="FK__Grocshary__user___36B12243" Association="GroSHDBModel.FK__Grocshary__user___36B12243">
             <End Role="UsersInfo" EntitySet="UsersInfoes" />
             <End Role="GrocsharyItem" EntitySet="GrocsharyItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SendRecei__sentF__3B75D760" Association="GroSHDBModel.FK__SendRecei__sentF__3B75D760">
-            <End Role="UsersInfo" EntitySet="UsersInfoes" />
-            <End Role="SendReceiveRequest" EntitySet="SendReceiveRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersAddress_UsersInfo" Association="GroSHDBModel.FK_UsersAddress_UsersInfo">
             <End Role="UsersInfo" EntitySet="UsersInfoes" />
@@ -272,6 +259,18 @@
             <Parameter Name="userId" Mode="In" Type="Int32" />
             <Parameter Name="searchKey" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="SendReceiveRequests" EntityType="GroSHDBModel.SendReceiveRequest" />
+          <AssociationSet Name="FK_SendReceiveRequest_GrocsharyItem" Association="GroSHDBModel.FK_SendReceiveRequest_GrocsharyItem">
+            <End Role="GrocsharyItem" EntitySet="GrocsharyItems" />
+            <End Role="SendReceiveRequest" EntitySet="SendReceiveRequests" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetNotification" ReturnType="Collection(GroSHDBModel.sp_GetNotification_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TotalRequest">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="result" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="GrocsharyItem">
           <Key>
@@ -289,19 +288,7 @@
           <NavigationProperty Name="UsersInfo" Relationship="GroSHDBModel.FK__Grocshary__user___36B12243" FromRole="GrocsharyItem" ToRole="UsersInfo" />
           <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="SendReceiveRequest">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sentFrom" Type="Int32" />
-          <Property Name="senTo" Type="Int32" />
-          <Property Name="status" Type="Binary" MaxLength="1" FixedLength="true" />
-          <Property Name="sentDate" Type="DateTime" Precision="3" />
-          <Property Name="receivedDate" Type="DateTime" Precision="3" />
-          <Property Name="acceptedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UsersInfo" Relationship="GroSHDBModel.FK__SendRecei__sentF__3B75D760" FromRole="SendReceiveRequest" ToRole="UsersInfo" />
+          <NavigationProperty Name="SendReceiveRequests" Relationship="GroSHDBModel.FK_SendReceiveRequest_GrocsharyItem" FromRole="GrocsharyItem" ToRole="SendReceiveRequest" />
         </EntityType>
         <EntityType Name="UsersAddress">
           <Key>
@@ -333,7 +320,6 @@
           <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modifiedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="GrocsharyItems" Relationship="GroSHDBModel.FK__Grocshary__user___36B12243" FromRole="UsersInfo" ToRole="GrocsharyItem" />
-          <NavigationProperty Name="SendReceiveRequests" Relationship="GroSHDBModel.FK__SendRecei__sentF__3B75D760" FromRole="UsersInfo" ToRole="SendReceiveRequest" />
           <NavigationProperty Name="UsersAddresses" Relationship="GroSHDBModel.FK_UsersAddress_UsersInfo" FromRole="UsersInfo" ToRole="UsersAddress" />
         </EntityType>
         <Association Name="FK__Grocshary__user___36B12243">
@@ -345,18 +331,6 @@
             </Principal>
             <Dependent Role="GrocsharyItem">
               <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__SendRecei__sentF__3B75D760">
-          <End Type="GroSHDBModel.UsersInfo" Role="UsersInfo" Multiplicity="0..1" />
-          <End Type="GroSHDBModel.SendReceiveRequest" Role="SendReceiveRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UsersInfo">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SendReceiveRequest">
-              <PropertyRef Name="sentFrom" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -433,6 +407,50 @@
           <Property Type="Double" Name="distance" Nullable="true" />
           <Property Type="Boolean" Name="IsActive" Nullable="true" />
         </ComplexType>
+        <EntityType Name="SendReceiveRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemId" Type="Int32" Nullable="false" />
+          <Property Name="sender" Type="Int32" Nullable="false" />
+          <Property Name="receiver" Type="Int32" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="sendDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="acceptOrRejectDate" Type="DateTime" Precision="3" Nullable="false" />
+          <NavigationProperty Name="GrocsharyItem" Relationship="GroSHDBModel.FK_SendReceiveRequest_GrocsharyItem" FromRole="SendReceiveRequest" ToRole="GrocsharyItem" />
+          <Property Name="isSendRequest" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SendReceiveRequest_GrocsharyItem">
+          <End Type="GroSHDBModel.GrocsharyItem" Role="GrocsharyItem" Multiplicity="1" />
+          <End Type="GroSHDBModel.SendReceiveRequest" Role="SendReceiveRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrocsharyItem">
+              <PropertyRef Name="itemId" />
+            </Principal>
+            <Dependent Role="SendReceiveRequest">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_GetNotification_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="distance" Nullable="true" />
+          <Property Type="String" Name="first_Name" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="last_Name" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="addressLine" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="state" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="country" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="zipcode" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -453,19 +471,6 @@
                 <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
                 <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
                 <ScalarProperty Name="itemId" ColumnName="itemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SendReceiveRequests">
-            <EntityTypeMapping TypeName="GroSHDBModel.SendReceiveRequest">
-              <MappingFragment StoreEntitySet="SendReceiveRequest">
-                <ScalarProperty Name="acceptedDate" ColumnName="acceptedDate" />
-                <ScalarProperty Name="receivedDate" ColumnName="receivedDate" />
-                <ScalarProperty Name="sentDate" ColumnName="sentDate" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="senTo" ColumnName="senTo" />
-                <ScalarProperty Name="sentFrom" ColumnName="sentFrom" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -555,6 +560,43 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SendReceiveRequests">
+            <EntityTypeMapping TypeName="GroSHDBModel.SendReceiveRequest">
+              <MappingFragment StoreEntitySet="SendReceiveRequest">
+                <ScalarProperty Name="isSendRequest" ColumnName="isSendRequest" />
+                <ScalarProperty Name="acceptOrRejectDate" ColumnName="acceptOrRejectDate" />
+                <ScalarProperty Name="sendDate" ColumnName="sendDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="receiver" ColumnName="receiver" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="first_Name" ColumnName="first_Name" />
+                <ScalarProperty Name="last_Name" ColumnName="last_Name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="addressLine" ColumnName="addressLine" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TotalRequest" FunctionName="GroSHDBModel.Store.sp_TotalRequest" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

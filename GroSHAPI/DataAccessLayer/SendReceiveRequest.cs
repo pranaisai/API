@@ -15,13 +15,14 @@ namespace DataAccessLayer
     public partial class SendReceiveRequest
     {
         public int id { get; set; }
-        public Nullable<int> sentFrom { get; set; }
-        public Nullable<int> senTo { get; set; }
-        public byte[] status { get; set; }
-        public Nullable<System.DateTime> sentDate { get; set; }
-        public Nullable<System.DateTime> receivedDate { get; set; }
-        public Nullable<System.DateTime> acceptedDate { get; set; }
+        public int itemId { get; set; }
+        public int sender { get; set; }
+        public Nullable<int> receiver { get; set; }
+        public int status { get; set; }
+        public System.DateTime sendDate { get; set; }
+        public System.DateTime acceptOrRejectDate { get; set; }
+        public bool isSendRequest { get; set; }
     
-        public virtual UsersInfo UsersInfo { get; set; }
+        public virtual GrocsharyItem GrocsharyItem { get; set; }
     }
 }

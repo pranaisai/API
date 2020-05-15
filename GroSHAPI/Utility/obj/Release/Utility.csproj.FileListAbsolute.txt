@@ -1,0 +1,7 @@
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Release\Utility.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Release\Utility.pdb
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Release\DTO.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\bin\Release\DTO.pdb
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Release\Utility.csprojResolveAssemblyReference.cache
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Release\Utility.dll
+C:\Users\rakesh\GitHub\GrocSHAPI\GroSHAPI\Utility\obj\Release\Utility.pdb

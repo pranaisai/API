@@ -18,7 +18,6 @@ namespace DataAccessLayer
         public UsersInfo()
         {
             this.GrocsharyItems = new HashSet<GrocsharyItem>();
-            this.SendReceiveRequests = new HashSet<SendReceiveRequest>();
             this.UsersAddresses = new HashSet<UsersAddress>();
         }
     
@@ -33,8 +32,6 @@ namespace DataAccessLayer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GrocsharyItem> GrocsharyItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SendReceiveRequest> SendReceiveRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersAddress> UsersAddresses { get; set; }
     }
