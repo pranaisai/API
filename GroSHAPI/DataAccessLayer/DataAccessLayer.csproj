@@ -58,7 +58,13 @@
     <Compile Include="GetItemsWithFilter_Result.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetItemsWithFilter_Result1.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetItems_Result.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetItems_Result1.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetMyItems_Result.cs">

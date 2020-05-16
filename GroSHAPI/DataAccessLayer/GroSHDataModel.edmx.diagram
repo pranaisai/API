@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="GroSHDBModel.Country" Width="1.5" PointX="5.375" PointY="1" />
         <EntityTypeShape EntityType="GroSHDBModel.State" Width="1.5" PointX="7.625" PointY="0.875" />
         <AssociationConnector Association="GroSHDBModel.FK_States_Countries" />
-        <EntityTypeShape EntityType="GroSHDBModel.SendReceiveRequest" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="GroSHDBModel.SendReceiveRequest" Width="1.5" PointX="5.25" PointY="5.75" />
         <AssociationConnector Association="GroSHDBModel.FK_SendReceiveRequest_GrocsharyItem" />
       </Diagram>
     </edmx:Diagrams>

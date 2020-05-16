@@ -133,7 +133,10 @@ namespace DataAccessLayer
 					{
 						itemId = itemId,
 						sender = senderId,
-						receiver = receiverId,						
+						receiver = receiverId,
+						sendDate = DateTime.Now,
+						acceptOrRejectDate = DateTime.Now,
+						isSendRequest = true,						
 						status = 0
 					});
 					flag = db.SaveChanges();					

@@ -16,8 +16,9 @@ namespace GroSHAPI
             
             container.RegisterType<IUserBusinessLayer, UserBusinessLayer>();
 			container.RegisterType<IGrocSHItemBusinessLayer, GrocSHItemBusinessLayer>();
-            
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+			container.RegisterType<IProcessBusinessLayer, ProcessBusinessLayer>();
+
+			DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

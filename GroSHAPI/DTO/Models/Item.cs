@@ -17,5 +17,7 @@ namespace DTO.Models
 		public double? Distance { get; set; }
 		public string UnitOfLength { get; set; } = "Mile";
 		public bool? IsActive { get; set; }
+		public bool IsSendRequest { get; set; }
+		public int RequestStatus { get; set; }
 	}
 }

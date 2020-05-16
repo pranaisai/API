@@ -24,6 +24,10 @@ namespace GroSHAPI
 
 			container.Register<IGrocSHItemDataAccess, GrocSHItemDataAccess>();
 			container.Register<IGrocSHItemBusinessLayer, GrocSHItemBusinessLayer>();
+
+			container.Register<IProcessDataAccess, ProcessDataAccess>();
+			container.Register<IProcessBusinessLayer, ProcessBusinessLayer>();
+
 			container.Verify();
 			DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 			GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorDependencyResolver(container);

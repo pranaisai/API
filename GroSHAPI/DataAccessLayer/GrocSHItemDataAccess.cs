@@ -144,6 +144,8 @@ namespace DataAccessLayer
 								data.ImageName = item.imageName;
 								data.Distance = item.distance;
 								data.IsActive = item.IsActive;
+								data.IsSendRequest = item.IsSendRequest;
+								data.RequestStatus = item.RequestStatus;
 								if (!string.IsNullOrEmpty(item.imageName))
 								{
 									data.ImageUrl = root + "/" + item.imageName;
@@ -172,7 +174,9 @@ namespace DataAccessLayer
 								data.ExchangeItem = item.exchangeItem;
 								data.ImageName = item.imageName;
 								data.Distance = item.distance;
-								data.IsActive = true;
+								data.IsActive = item.IsActive;
+								data.IsSendRequest = item.IsSendRequest;
+								data.RequestStatus = item.RequestStatus;
 								if (!string.IsNullOrEmpty(item.imageName))
 								{
 									data.ImageUrl = root + "/" + item.imageName;

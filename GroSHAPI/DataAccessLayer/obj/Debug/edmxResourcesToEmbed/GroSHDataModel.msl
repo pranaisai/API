@@ -67,18 +67,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetItems" FunctionName="GroSHDBModel.Store.GetItems">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GroSHDBModel.GetItems_Result">
-          <ScalarProperty Name="itemId" ColumnName="itemId" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
-          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
-          <ScalarProperty Name="imageName" ColumnName="imageName" />
-          <ScalarProperty Name="distance" ColumnName="distance" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetMyItems" FunctionName="GroSHDBModel.Store.GetMyItems">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GroSHDBModel.GetMyItems_Result1">
@@ -91,33 +79,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="GetItemsWithFilter" FunctionName="GroSHDBModel.Store.GetItemsWithFilter">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GroSHDBModel.GetItemsWithFilter_Result">
-          <ScalarProperty Name="itemId" ColumnName="itemId" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
-          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
-          <ScalarProperty Name="imageName" ColumnName="imageName" />
-          <ScalarProperty Name="distance" ColumnName="distance" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="SendReceiveRequests">
-      <EntityTypeMapping TypeName="GroSHDBModel.SendReceiveRequest">
-        <MappingFragment StoreEntitySet="SendReceiveRequest">
-          <ScalarProperty Name="isSendRequest" ColumnName="isSendRequest" />
-          <ScalarProperty Name="acceptOrRejectDate" ColumnName="acceptOrRejectDate" />
-          <ScalarProperty Name="sendDate" ColumnName="sendDate" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="receiver" ColumnName="receiver" />
-          <ScalarProperty Name="sender" ColumnName="sender" />
-          <ScalarProperty Name="itemId" ColumnName="itemId" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result">
@@ -141,5 +102,49 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_TotalRequest" FunctionName="GroSHDBModel.Store.sp_TotalRequest" />
+    <FunctionImportMapping FunctionImportName="GetItems" FunctionName="GroSHDBModel.Store.GetItems">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GroSHDBModel.GetItems_Result1">
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+          <ScalarProperty Name="imageName" ColumnName="imageName" />
+          <ScalarProperty Name="distance" ColumnName="distance" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsSendRequest" ColumnName="IsSendRequest" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetItemsWithFilter" FunctionName="GroSHDBModel.Store.GetItemsWithFilter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GroSHDBModel.GetItemsWithFilter_Result1">
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+          <ScalarProperty Name="imageName" ColumnName="imageName" />
+          <ScalarProperty Name="distance" ColumnName="distance" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsSendRequest" ColumnName="IsSendRequest" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="SendReceiveRequests">
+      <EntityTypeMapping TypeName="GroSHDBModel.SendReceiveRequest">
+        <MappingFragment StoreEntitySet="SendReceiveRequest">
+          <ScalarProperty Name="isSendRequest" ColumnName="isSendRequest" />
+          <ScalarProperty Name="acceptOrRejectDate" ColumnName="acceptOrRejectDate" />
+          <ScalarProperty Name="sendDate" ColumnName="sendDate" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="receiver" ColumnName="receiver" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

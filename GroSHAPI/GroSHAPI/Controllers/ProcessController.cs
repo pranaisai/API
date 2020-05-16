@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace GroSHAPI.Controllers
 {
+	[RoutePrefix("api/Process")]
 	[Authorize]
 	public class ProcessController : ApiController
 	{
@@ -23,7 +24,7 @@ namespace GroSHAPI.Controllers
 		/// </summary>
 		/// <param name="userId"></param>
 		/// <returns></returns>
-		[HttpGet]
+		[HttpGet]		
 		public HttpResponseMessage GetNotification(int userId)
 		{
 			Response<int> response = new Response<int>();
@@ -49,7 +50,7 @@ namespace GroSHAPI.Controllers
 		/// <param name="userId"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public HttpResponseMessage GetNotifications(int userId)
+		public HttpResponseMessage GetNotificationList(int userId)
 		{
 			Response<List<NotificationModel>> response = new Response<List<NotificationModel>>();
 			try

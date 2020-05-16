@@ -87,7 +87,42 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("AddNewUser", firstNameParameter, lastNameParameter, emailParameter, phoneParameter, passwordParameter, addressLineParameter, cityParameter, stateParameter, countryParameter, zipcodeParameter, latParameter, lonParameter, result);
         }
     
-        public virtual ObjectResult<GetItems_Result> GetItems(string lat, string lon, Nullable<int> distance, Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
+        public virtual ObjectResult<GetMyItems_Result1> GetMyItems(Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
+        {
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var rowsPerPageParameter = rowsPerPage.HasValue ?
+                new ObjectParameter("RowsPerPage", rowsPerPage) :
+                new ObjectParameter("RowsPerPage", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result1>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetNotification_Result> sp_GetNotification(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetNotification_Result>("sp_GetNotification", userIdParameter);
+        }
+    
+        public virtual int sp_TotalRequest(Nullable<int> userId, ObjectParameter result)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TotalRequest", userIdParameter, result);
+        }
+    
+        public virtual ObjectResult<GetItems_Result1> GetItems(string lat, string lon, Nullable<int> distance, Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
         {
             var latParameter = lat != null ?
                 new ObjectParameter("lat", lat) :
@@ -113,27 +148,10 @@ namespace DataAccessLayer
                 new ObjectParameter("userId", userId) :
                 new ObjectParameter("userId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItems_Result>("GetItems", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItems_Result1>("GetItems", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter);
         }
     
-        public virtual ObjectResult<GetMyItems_Result1> GetMyItems(Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId)
-        {
-            var pageNumberParameter = pageNumber.HasValue ?
-                new ObjectParameter("PageNumber", pageNumber) :
-                new ObjectParameter("PageNumber", typeof(int));
-    
-            var rowsPerPageParameter = rowsPerPage.HasValue ?
-                new ObjectParameter("RowsPerPage", rowsPerPage) :
-                new ObjectParameter("RowsPerPage", typeof(int));
-    
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result1>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
-        }
-    
-        public virtual ObjectResult<GetItemsWithFilter_Result> GetItemsWithFilter(string lat, string lon, Nullable<int> distance, Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId, string searchKey)
+        public virtual ObjectResult<GetItemsWithFilter_Result1> GetItemsWithFilter(string lat, string lon, Nullable<int> distance, Nullable<int> pageNumber, Nullable<int> rowsPerPage, Nullable<int> userId, string searchKey)
         {
             var latParameter = lat != null ?
                 new ObjectParameter("lat", lat) :
@@ -163,25 +181,7 @@ namespace DataAccessLayer
                 new ObjectParameter("searchKey", searchKey) :
                 new ObjectParameter("searchKey", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItemsWithFilter_Result>("GetItemsWithFilter", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter, searchKeyParameter);
-        }
-    
-        public virtual ObjectResult<sp_GetNotification_Result> sp_GetNotification(Nullable<int> userId)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetNotification_Result>("sp_GetNotification", userIdParameter);
-        }
-    
-        public virtual int sp_TotalRequest(Nullable<int> userId, ObjectParameter result)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TotalRequest", userIdParameter, result);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItemsWithFilter_Result1>("GetItemsWithFilter", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter, searchKeyParameter);
         }
     }
 }
