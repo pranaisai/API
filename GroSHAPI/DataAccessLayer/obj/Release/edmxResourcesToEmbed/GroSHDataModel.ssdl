@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GroSHDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ChatHistory">
+    <Key>
+      <PropertyRef Name="chatId" />
+    </Key>
+    <Property Name="chatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sender" Type="int" />
+    <Property Name="receiver" Type="int" />
+    <Property Name="createdDate" Type="datetime" />
+    <Property Name="itemId" Type="int" />
+    <Property Name="messages" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="Countries">
     <Key>
       <PropertyRef Name="CountryId" />
@@ -164,6 +175,11 @@
     <Parameter Name="RowsPerPage" Type="int" Mode="In" />
     <Parameter Name="userId" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_GetChatHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="senderId" Type="int" Mode="In" />
+    <Parameter Name="receiverId" Type="int" Mode="In" />
+    <Parameter Name="itemId" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_GetNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userId" Type="int" Mode="In" />
   </Function>
@@ -172,6 +188,7 @@
     <Parameter Name="result" Type="int" Mode="InOut" />
   </Function>
   <EntityContainer Name="GroSHDBModelStoreContainer">
+    <EntitySet Name="ChatHistory" EntityType="Self.ChatHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SendReceiveRequest" EntityType="Self.SendReceiveRequest" Schema="dbo" store:Type="Tables" />

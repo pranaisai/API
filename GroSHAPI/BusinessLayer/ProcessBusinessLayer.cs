@@ -20,6 +20,11 @@ namespace BusinessLayer
 			return this._processDataAccess.AcceptOrReject(userId, requestId, status);
 		}
 
+		public List<ChatHistoryModel> GetHistory(int senderId, int receiverId, int itemId)
+		{
+			return this._processDataAccess.GetHistory(senderId, receiverId, itemId);
+		}
+
 		public int GetNewNotificationCounts(int userId)
 		{
 			return this._processDataAccess.GetNewNotificationCounts(userId);

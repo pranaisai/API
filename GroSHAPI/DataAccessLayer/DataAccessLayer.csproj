@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatHistory.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Country.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
@@ -101,7 +104,13 @@
     <Compile Include="SendReceiveRequest.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_GetChatHistory_Result.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_GetNotification_Result.cs">
+      <DependentUpon>GroSHDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetNotification_Result1.cs">
       <DependentUpon>GroSHDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="State.cs">

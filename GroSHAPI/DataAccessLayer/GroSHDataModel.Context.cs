@@ -33,6 +33,7 @@ namespace DataAccessLayer
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<SendReceiveRequest> SendReceiveRequests { get; set; }
+        public virtual DbSet<ChatHistory> ChatHistories { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AddNewUser(string firstName, string lastName, string email, string phone, string password, string addressLine, string city, string state, string country, string zipcode, string lat, string lon, ObjectParameter result)
         {
@@ -104,15 +105,6 @@ namespace DataAccessLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyItems_Result1>("GetMyItems", pageNumberParameter, rowsPerPageParameter, userIdParameter);
         }
     
-        public virtual ObjectResult<sp_GetNotification_Result> sp_GetNotification(Nullable<int> userId)
-        {
-            var userIdParameter = userId.HasValue ?
-                new ObjectParameter("userId", userId) :
-                new ObjectParameter("userId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetNotification_Result>("sp_GetNotification", userIdParameter);
-        }
-    
         public virtual int sp_TotalRequest(Nullable<int> userId, ObjectParameter result)
         {
             var userIdParameter = userId.HasValue ?
@@ -182,6 +174,32 @@ namespace DataAccessLayer
                 new ObjectParameter("searchKey", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetItemsWithFilter_Result1>("GetItemsWithFilter", latParameter, lonParameter, distanceParameter, pageNumberParameter, rowsPerPageParameter, userIdParameter, searchKeyParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetChatHistory_Result> sp_GetChatHistory(Nullable<int> senderId, Nullable<int> receiverId, Nullable<int> itemId)
+        {
+            var senderIdParameter = senderId.HasValue ?
+                new ObjectParameter("senderId", senderId) :
+                new ObjectParameter("senderId", typeof(int));
+    
+            var receiverIdParameter = receiverId.HasValue ?
+                new ObjectParameter("receiverId", receiverId) :
+                new ObjectParameter("receiverId", typeof(int));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetChatHistory_Result>("sp_GetChatHistory", senderIdParameter, receiverIdParameter, itemIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetNotification_Result1> sp_GetNotification(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetNotification_Result1>("sp_GetNotification", userIdParameter);
         }
     }
 }

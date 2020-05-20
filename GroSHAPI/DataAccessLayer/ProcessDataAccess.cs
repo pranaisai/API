@@ -40,6 +40,40 @@ namespace DataAccessLayer
 			return flag;
 		}
 
+		public List<ChatHistoryModel> GetHistory(int senderId, int receiverId, int itemId)
+		{
+			List<ChatHistoryModel> chatHistoryModel = new List<ChatHistoryModel>();
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					
+					var result = (from ChatHistoryModel in db.sp_GetChatHistory(senderId,receiverId,itemId)
+								  select ChatHistoryModel).ToList();
+					if (result != null)
+					{
+						foreach (var item in result)
+						{
+							ChatHistoryModel chatHistory = new ChatHistoryModel();
+							chatHistory.chatId = item.chatid;
+							chatHistory.sender = item.sender;
+							chatHistory.receiver = item.receiver;
+							chatHistory.itemId = item.itemId;
+							chatHistory.messages = item.messages;
+							chatHistory.SendDateTime = item.createdDate;
+							chatHistoryModel.Add(chatHistory);
+						}
+					}
+
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.StackTrace);
+			}
+			return chatHistoryModel;
+		}
+
 		/// <summary>
 		/// This interface implementation is used to get New notification count
 		/// </summary>
@@ -99,6 +133,7 @@ namespace DataAccessLayer
 							notification.AddressLine = item.addressLine;
 							notification.City = item.city;
 							notification.State = item.state;
+							notification.SenderId = item.id;
 							notification.Country = item.country;
 							notification.Zipcode = item.zipcode;
 							notificationlst.Add(notification);
@@ -112,6 +147,37 @@ namespace DataAccessLayer
 				Console.WriteLine(ex.StackTrace);
 			}
 			return notificationlst;
+		}
+
+		/// <summary>
+		/// This interface method is used to get chat history
+		/// </summary>
+		/// <param name="chatModel"></param>
+		/// <returns></returns>
+		public int SaveChat(ChatModel chatModel)
+		{
+			int flag = 0;
+			try
+			{
+				using (GroSHDBEntities db = new GroSHDBEntities())
+				{
+					var result = db.ChatHistories.Add(new ChatHistory()
+					{
+						itemId = chatModel.ItemId,
+						sender = chatModel.FirstUser,
+						receiver = chatModel.SecondUser,
+						messages = chatModel.Message,
+						createdDate = DateTime.Now
+						});
+						flag = db.SaveChanges();					
+					
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.StackTrace);
+			}
+			return flag;
 		}
 
 		/// <summary>

@@ -8,14 +8,15 @@ namespace DTO.Models
 {
 	public class ChatModel
 	{
-		public int FirstUser { get; set; }
+		public int? FirstUser { get; set; }
 
-		public int SecondUser { get; set; }
+		public int? SecondUser { get; set; }
 
 		public string Message { get; set; }
 
 		public DateTime SendTime { get; set; }
 
 		public string Sender { get; set; }
+		public int? ItemId { get; set; }
 	}
 }

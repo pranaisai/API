@@ -15,6 +15,7 @@
         <AssociationConnector Association="GroSHDBModel.FK_States_Countries" />
         <EntityTypeShape EntityType="GroSHDBModel.SendReceiveRequest" Width="1.5" PointX="5.25" PointY="5.75" />
         <AssociationConnector Association="GroSHDBModel.FK_SendReceiveRequest_GrocsharyItem" />
+        <EntityTypeShape EntityType="GroSHDBModel.ChatHistory" Width="1.5" PointX="7.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

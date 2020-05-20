@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ChatHistoryModel.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\EmailModel.cs" />

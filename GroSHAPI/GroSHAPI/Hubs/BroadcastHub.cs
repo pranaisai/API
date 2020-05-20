@@ -6,12 +6,25 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Threading.Tasks;
 using DTO.Models;
+using DataAccessLayer;
 
 namespace GroSHAPI.Hubs
 {
 	[HubName("BroadcastHub")]
 	public class BroadcastHub : Hub
-	{		
+	{
+		ProcessDataAccess obj = new ProcessDataAccess();
+		public void Send(string name, string message)
+        {
+            // Call the broadcastMessage method to update clients.
+            Clients.All.broadcastMessage(name, message);
+        }
+
+		public Task SendMessage1(string user, string message)
+		{
+			return Clients.All.SendAsync("ReceiveMessage", user, message);
+		}
+
 		/// <summary>
 		/// This method is used to JoinRoom for chat
 		/// </summary>
@@ -45,6 +58,8 @@ namespace GroSHAPI.Hubs
 				{
 					var groupName = objChatModel.FirstUser < objChatModel.SecondUser ? objChatModel.FirstUser.ToString() + objChatModel.SecondUser.ToString() : objChatModel.FirstUser.ToString() + objChatModel.SecondUser.ToString();
 					Clients.OthersInGroup(groupName).SendChatMessage(objChatModel);
+					obj.SaveChat(objChatModel);
+					
 				}
 			}
 			catch (Exception)

@@ -13,5 +13,6 @@ namespace BusinessLayer
 		int AcceptOrReject(int userId, int requestId, int status);
 		List<NotificationModel> GetNotifications(int userId);
 		int GetNewNotificationCounts(int userId);
+		List<ChatHistoryModel> GetHistory(int senderId, int receiverId, int itemId);
 	}
 }

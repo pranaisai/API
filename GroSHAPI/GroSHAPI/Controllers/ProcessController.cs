@@ -69,6 +69,26 @@ namespace GroSHAPI.Controllers
 			return Request.CreateResponse(response);// Ok(response);
 		}
 
+		[HttpGet]
+		public HttpResponseMessage GetChatHistory(int senderid,int receiverid, int itemId)
+		{
+			Response<List<ChatHistoryModel>> response = new Response<List<ChatHistoryModel>>();
+			try
+			{
+				List<ChatHistoryModel> items = this._processBusinessLayer.GetHistory(senderid, receiverid, itemId);
+				response.SatusCode = 200;
+				response.Data = items;
+				response.Message = "sucess";
+			}
+			catch (Exception)
+			{
+				response.SatusCode = 201;
+				response.Data = null;
+				response.Message = Utility.Constants.FailedMesg;
+			}
+			return Request.CreateResponse(response);// Ok(response);
+		}
+
 		/// <summary>
 		/// this method is used to send request
 		/// </summary>

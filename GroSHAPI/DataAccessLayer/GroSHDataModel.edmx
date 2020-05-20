@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GroSHDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChatHistory">
+          <Key>
+            <PropertyRef Name="chatId" />
+          </Key>
+          <Property Name="chatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sender" Type="int" />
+          <Property Name="receiver" Type="int" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="itemId" Type="int" />
+          <Property Name="messages" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Countries">
           <Key>
             <PropertyRef Name="CountryId" />
@@ -169,6 +180,11 @@
           <Parameter Name="RowsPerPage" Type="int" Mode="In" />
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetChatHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="senderId" Type="int" Mode="In" />
+          <Parameter Name="receiverId" Type="int" Mode="In" />
+          <Parameter Name="itemId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_GetNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
@@ -177,6 +193,7 @@
           <Parameter Name="result" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="GroSHDBModelStoreContainer">
+          <EntitySet Name="ChatHistory" EntityType="Self.ChatHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrocsharyItem" EntityType="Self.GrocsharyItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SendReceiveRequest" EntityType="Self.SendReceiveRequest" Schema="dbo" store:Type="Tables" />
@@ -242,9 +259,6 @@
             <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
             <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetNotification" ReturnType="Collection(GroSHDBModel.sp_GetNotification_Result)">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_TotalRequest">
             <Parameter Name="userId" Mode="In" Type="Int32" />
             <Parameter Name="result" Mode="InOut" Type="Int32" />
@@ -271,6 +285,15 @@
             <End Role="GrocsharyItem" EntitySet="GrocsharyItems" />
             <End Role="SendReceiveRequest" EntitySet="SendReceiveRequests" />
           </AssociationSet>
+          <EntitySet Name="ChatHistories" EntityType="GroSHDBModel.ChatHistory" />
+          <FunctionImport Name="sp_GetChatHistory" ReturnType="Collection(GroSHDBModel.sp_GetChatHistory_Result)">
+            <Parameter Name="senderId" Mode="In" Type="Int32" />
+            <Parameter Name="receiverId" Mode="In" Type="Int32" />
+            <Parameter Name="itemId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetNotification" ReturnType="Collection(GroSHDBModel.sp_GetNotification_Result1)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="GrocsharyItem">
           <Key>
@@ -473,6 +496,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ChatHistory">
+          <Key>
+            <PropertyRef Name="chatId" />
+          </Key>
+          <Property Name="chatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sender" Type="Int32" />
+          <Property Name="receiver" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="itemId" Type="Int32" />
+          <Property Name="messages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="sp_GetChatHistory_Result">
+          <Property Type="Int32" Name="chatid" Nullable="false" />
+          <Property Type="String" Name="messages" Nullable="true" />
+          <Property Type="Int32" Name="sender" Nullable="true" />
+          <Property Type="Int32" Name="receiver" Nullable="true" />
+          <Property Type="DateTime" Name="createdDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="itemId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetNotification_Result1">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="itemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemDescription" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="exchangeItem" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="imageName" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="distance" Nullable="true" />
+          <Property Type="String" Name="first_Name" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="last_Name" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="senderId" Nullable="false" />
+          <Property Type="String" Name="addressLine" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="city" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="state" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="country" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="zipcode" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -557,28 +618,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="itemId" ColumnName="itemId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
-                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
-                <ScalarProperty Name="imageName" ColumnName="imageName" />
-                <ScalarProperty Name="distance" ColumnName="distance" />
-                <ScalarProperty Name="first_Name" ColumnName="first_Name" />
-                <ScalarProperty Name="last_Name" ColumnName="last_Name" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="addressLine" ColumnName="addressLine" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_TotalRequest" FunctionName="GroSHDBModel.Store.sp_TotalRequest" />
           <FunctionImportMapping FunctionImportName="GetItems" FunctionName="GroSHDBModel.Store.GetItems">
             <ResultMapping>
@@ -624,6 +663,53 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChatHistories">
+            <EntityTypeMapping TypeName="GroSHDBModel.ChatHistory">
+              <MappingFragment StoreEntitySet="ChatHistory">
+                <ScalarProperty Name="messages" ColumnName="messages" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="receiver" ColumnName="receiver" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="chatId" ColumnName="chatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetChatHistory" FunctionName="GroSHDBModel.Store.sp_GetChatHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetChatHistory_Result">
+                <ScalarProperty Name="chatid" ColumnName="chatid" />
+                <ScalarProperty Name="messages" ColumnName="messages" />
+                <ScalarProperty Name="sender" ColumnName="sender" />
+                <ScalarProperty Name="receiver" ColumnName="receiver" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result1">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+                <ScalarProperty Name="imageName" ColumnName="imageName" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="first_Name" ColumnName="first_Name" />
+                <ScalarProperty Name="last_Name" ColumnName="last_Name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="senderId" ColumnName="senderId" />
+                <ScalarProperty Name="addressLine" ColumnName="addressLine" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

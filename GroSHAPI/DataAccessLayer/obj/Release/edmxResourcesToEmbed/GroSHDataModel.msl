@@ -79,28 +79,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="itemId" ColumnName="itemId" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
-          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
-          <ScalarProperty Name="imageName" ColumnName="imageName" />
-          <ScalarProperty Name="distance" ColumnName="distance" />
-          <ScalarProperty Name="first_Name" ColumnName="first_Name" />
-          <ScalarProperty Name="last_Name" ColumnName="last_Name" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="addressLine" ColumnName="addressLine" />
-          <ScalarProperty Name="city" ColumnName="city" />
-          <ScalarProperty Name="state" ColumnName="state" />
-          <ScalarProperty Name="country" ColumnName="country" />
-          <ScalarProperty Name="zipcode" ColumnName="zipcode" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_TotalRequest" FunctionName="GroSHDBModel.Store.sp_TotalRequest" />
     <FunctionImportMapping FunctionImportName="GetItems" FunctionName="GroSHDBModel.Store.GetItems">
       <ResultMapping>
@@ -146,5 +124,52 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ChatHistories">
+      <EntityTypeMapping TypeName="GroSHDBModel.ChatHistory">
+        <MappingFragment StoreEntitySet="ChatHistory">
+          <ScalarProperty Name="messages" ColumnName="messages" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="receiver" ColumnName="receiver" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="chatId" ColumnName="chatId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetChatHistory" FunctionName="GroSHDBModel.Store.sp_GetChatHistory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetChatHistory_Result">
+          <ScalarProperty Name="chatid" ColumnName="chatid" />
+          <ScalarProperty Name="messages" ColumnName="messages" />
+          <ScalarProperty Name="sender" ColumnName="sender" />
+          <ScalarProperty Name="receiver" ColumnName="receiver" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetNotification" FunctionName="GroSHDBModel.Store.sp_GetNotification">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GroSHDBModel.sp_GetNotification_Result1">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="itemId" ColumnName="itemId" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+          <ScalarProperty Name="exchangeItem" ColumnName="exchangeItem" />
+          <ScalarProperty Name="imageName" ColumnName="imageName" />
+          <ScalarProperty Name="distance" ColumnName="distance" />
+          <ScalarProperty Name="first_Name" ColumnName="first_Name" />
+          <ScalarProperty Name="last_Name" ColumnName="last_Name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="senderId" ColumnName="senderId" />
+          <ScalarProperty Name="addressLine" ColumnName="addressLine" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
